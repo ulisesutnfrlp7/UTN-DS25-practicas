@@ -7,7 +7,7 @@ Escribir un sitio web en HTML para una Librería. Debe contener: <br>
 - Pie de página: al menos copyright, redes sociales y términos y condiciones. <br>
 ● Página principal: debe mostrar bloques para cuatro temas (título con enlace a la sección del tema) y un libro destacado en cada uno 
 (imagen de la tapa, título y autor). <br>
-● Secciones: una para cada una de los cuatro temas, debe mostrar 6 libros cada una (título, autor, imagen y descripciones de libros). <br>  
+● Secciones: una para cada una de los cuatro temas, debe mostrar 6 libros cada una (título, autor, imagen y descripciones de libros). <br>
 ● Registración: Formulario completo solicitando datos personales. <br>
 - Nombre (text) <br> 
 - Apellido (text) <br>
@@ -18,4 +18,4 @@ Escribir un sitio web en HTML para una Librería. Debe contener: <br>
 - Tema Favorito (select de los temas) <br>
 - Botón (submit) <br>
 ● Contacto: Dirección y datos de contacto (teléfonos, email). Formulario de contacto. <br>
-<b> IMPORTANTE </b> : Repasar requerimientos y hacer wireframes antes de comenzar con el código.
+<b> IMPORTANTE </b>: Repasar requerimientos y hacer wireframes antes de comenzar con el código.
