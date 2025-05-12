@@ -1,6 +1,6 @@
 # Ejercicio 5: Librería
 Escribir un sitio web en HTML para una Librería. Debe contener: <br>
-● Layout: unificado para todo el sitio con cabecera, menú, bloque de contenido y pie.
+● Layout: unificado para todo el sitio con cabecera, menú, bloque de contenido y pie. <br>
 - Hoja de Estilos centralizada y estructura de directorios organizada separando los css e imágenes en directorios aparte. <br>
 - Cabecera: con imagen de fondo (background-image), logo y nombre de la librería. <br>
 - Menú: acceso a Inicio, cada sección, registración y contacto. <br>
