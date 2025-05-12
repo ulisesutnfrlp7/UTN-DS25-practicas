@@ -5,10 +5,13 @@ Escribir un sitio web en HTML para una Librería. Debe contener: <br>
 - Cabecera: con imagen de fondo (background-image), logo y nombre de la librería. <br>
 - Menú: acceso a Inicio, cada sección, registración y contacto. <br>
 - Pie de página: al menos copyright, redes sociales y términos y condiciones. <br>
+<br>
 ● Página principal: debe mostrar bloques para cuatro temas (título con enlace a la sección del tema) y un libro destacado en cada uno 
 (imagen de la tapa, título y autor). <br>
+<br>
 ● Secciones: una para cada una de los cuatro temas, debe mostrar 6 libros cada una (título, autor, imagen y descripciones de libros). <br>
 ● Registración: Formulario completo solicitando datos personales. <br>
+<br>
 - Nombre (text) <br> 
 - Apellido (text) <br>
 - Fecha de Nacimiento (date) <br>
