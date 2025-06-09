@@ -1,42 +1,146 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* ========================= ESTILOS GENERALES
+========================= */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-image: url(/src/assets/images/fondo_suave.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.85);
+  background-blend-mode: lighten;
+  color: #222;
+}
+
+a {
+  margin: 10px;
+  border: 5px solid black;
+  text-decoration: none;
+  padding: 5px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: brown;
+  font-size: 27px;
+}
+
+/* ========================= HEADER
+========================= */
+#cabecera {
   text-align: center;
+  background-image: url(/src/assets/images/R.jpg);
+  width: 1343px;
+  background-size: cover;
+  background-position: center;
+  color: rgb(251, 249, 249);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+#cabecera img {
+  margin-top: 5px;
+  height: 70px;
+  margin-left: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#cabecera span {
+  font-size: 80px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* ========================= MENU
+========================= */
+#menu {
+  float: left;
+  width: 700px;
+  margin-top: 60px;
 }
 
-.card {
-  padding: 2em;
+.menu-bloque {
+  margin-bottom: 30px;
 }
 
-.read-the-docs {
-  color: #888;
+#menu a {
+  display: inline-block;
+  margin: 10px;
+  border: 5px solid black;
+  text-decoration: none;
+  padding: 5px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: brown;
+  font-size: 27px;
+}
+
+/* ========================= CONTENIDO
+========================= */
+#contenido {
+  float: left;
+  width: 550px;
+  margin-top: 60px;
+}
+
+#contenido p {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#contenido img {
+  margin: 0;
+  height: 180px;
+}
+
+/* ========================= PIE DE PÁGINA
+========================= */
+#pie {
+  clear: both;
+  height: 10px;
+}
+
+#pie p {
+  text-align: center;
+  font-weight: 500;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-image: url(/src/assets/images/pie.avif);
+}
+
+#pie span#tw {
+  color: rgb(23, 136, 217);
+}
+
+#pie span#ig {
+  color: rgb(222, 36, 29);
+}
+
+/* ========================= LIBRO DESTACADO
+========================= */
+.libro-destacado {
+  margin-bottom: 40px;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+.libro-titulo {
+  font-size: 24px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto 10px auto;
+  color: brown;
+  text-decoration: none;
+  text-align: center;
+  border: 5px solid black;
+  width: fit-content;
+  padding: 5px 10px;
+}
+
+.libro-descripcion {
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.libro-imagen {
+  height: 180px;
+  display: block;
+  margin-top: 5px;
 }
