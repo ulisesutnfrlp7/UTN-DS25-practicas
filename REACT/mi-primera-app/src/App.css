@@ -1,5 +1,4 @@
-/* ========================= ESTILOS GENERALES
-========================= */
+/* ========================= ESTILOS GENERALES ========================= */
 body {
   margin: 0;
   font-family: sans-serif;
@@ -22,18 +21,24 @@ a {
   font-size: 27px;
 }
 
-/* ========================= HEADER
-========================= */
+/* ========================= CONTENEDOR ========================= */
+#contenedor {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ========================= HEADER ========================= */
 #cabecera {
-  text-align: center;
-  background-image: url(/src/assets/images/R.jpg);
-  width: 1343px;
-  background-size: cover;
-  background-position: center;
-  color: rgb(251, 249, 249);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  background-image: url(/src/assets/images/R.jpg);
+  background-size: cover;
+  background-position: center;
+  color: rgb(251, 249, 249);
+  padding: 20px;
 }
 
 #cabecera img {
@@ -45,14 +50,23 @@ a {
 #cabecera span {
   font-size: 80px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-align: center;
 }
 
-/* ========================= MENU
-========================= */
+/* ========================= LAYOUT PRINCIPAL ========================= */
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* ========================= MENU ========================= */
 #menu {
-  float: left;
-  width: 700px;
-  margin-top: 60px;
+  flex: 1 1 300px;
+  max-width: 45%;
+  margin-top: 30px;
 }
 
 .menu-bloque {
@@ -70,12 +84,16 @@ a {
   font-size: 27px;
 }
 
-/* ========================= CONTENIDO
-========================= */
+/* ========================= CONTENIDO ========================= */
+
 #contenido {
-  float: left;
-  width: 550px;
-  margin-top: 60px;
+  flex: 1 1 300px;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  place-content: center;
+  margin: 0 auto;
 }
 
 #contenido p {
@@ -89,18 +107,15 @@ a {
   height: 180px;
 }
 
-/* ========================= PIE DE PÁGINA
-========================= */
+/* ========================= PIE DE PÁGINA ========================= */
 #pie {
-  clear: both;
-  height: 10px;
-}
-
-#pie p {
   text-align: center;
   font-weight: 500;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   background-image: url(/src/assets/images/pie.avif);
+  background-size: cover;
+  padding: 10px;
+  margin-top: auto;
 }
 
 #pie span#tw {
@@ -111,12 +126,11 @@ a {
   color: rgb(222, 36, 29);
 }
 
-/* ========================= LIBRO DESTACADO
-========================= */
+/* ========================= LIBRO DESTACADO ========================= */
 .libro-destacado {
   margin-bottom: 40px;
   padding: 10px;
-  border-bottom: 2px solid #ccc;
+  /* border-bottom eliminado */
 }
 
 .libro-titulo {
@@ -143,4 +157,28 @@ a {
   height: 180px;
   display: block;
   margin-top: 5px;
+}
+
+/* ========================= RESPONSIVE ========================= */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #menu, #contenido {
+    max-width: 100%;
+  }
+
+  #contenido {
+    grid-template-columns: 1fr;
+  }
+
+  #cabecera span {
+    font-size: 40px;
+  }
+
+  #cabecera img {
+    height: 50px;
+  }
 }

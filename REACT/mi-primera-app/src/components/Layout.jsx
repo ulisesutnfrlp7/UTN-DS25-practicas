@@ -8,18 +8,10 @@ import '../App.css';
 const Layout = () => {
     return (
         <div id="contenedor">
-            <header>
                 <Header />
-            </header>
-            <nav>
                 <Menu />
-            </nav>
-            <main>
                 <Contenido />
-            </main>
-            <footer>
                 <Footer />
-            </footer>
         </div>
     );
 };
