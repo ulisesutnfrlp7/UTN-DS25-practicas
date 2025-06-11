@@ -1,17 +1,19 @@
+import { Link } from 'react-router-dom';
+
 const Menu = () => {
     return (
         <div id="menu">
             <div className="menu-bloque">
-                <a href="ej5_sección_novelas.html">SECCIÓN NOVELAS</a>
-                <a href="ej5_sección_ciencia_ficción.html">SECCIÓN CIENCIA FICCIÓN</a>
+                <Link to="/novelas">SECCIÓN NOVELAS</Link>
+                <Link to="/ciencia-ficcion">SECCIÓN CIENCIA FICCIÓN</Link>
             </div>
             <div className="menu-bloque">
-                <a href="ej5_sección_terror.html">SECCIÓN TERROR</a>
-                <a href="ej5_sección_policiales.html">SECCIÓN POLICIALES</a>
+                <Link to="/terror">SECCIÓN TERROR</Link>
+                <Link to="/policiales">SECCIÓN POLICIALES</Link>
             </div>
             <div className="menu-bloque">
-                <a href="ej5_registro.html">REGISTRO</a>
-                <a href="ej5_contacto.html">CONTACTO</a>
+                <Link to="/registro">REGISTRO</Link>
+                <Link to="/contacto">CONTACTO</Link>
             </div>
         </div>
     );

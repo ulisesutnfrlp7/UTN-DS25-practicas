@@ -1,17 +1,16 @@
 // src/components/Layout.jsx
 import Header from './Header';
 import Menu from './Menu';
-import Contenido from './Contenido';
 import Footer from './Footer';
 import '../App.css';
 
-const Layout = () => {
+const Layout = ({ children }) => {
     return (
         <div id="contenedor">
-                <Header />
-                <Menu />
-                <Contenido />
-                <Footer />
+            <Header />
+            <Menu />
+            <main>{children}</main>
+            <Footer />
         </div>
     );
 };
