@@ -1,15 +1,18 @@
-// src/components/Layout.jsx
 import Header from './Header';
 import Menu from './Menu';
 import Footer from './Footer';
-import '../App.css';
+import '../App.css'; // mantené tu CSS si tenés estilos personalizados
 
 const Layout = ({ children }) => {
     return (
-        <div id="contenedor">
+        <div className="d-flex flex-column min-vh-100">
             <Header />
             <Menu />
-            <main>{children}</main>
+            <main className="flex-grow-1">
+                <div className="container py-4">
+                    {children}
+                </div>
+            </main>
             <Footer />
         </div>
     );

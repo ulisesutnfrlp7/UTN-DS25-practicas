@@ -1,46 +1,36 @@
-// src/pages/Contacto.jsx
-
 const Contacto = () => {
     return (
-        <div className="form">
+        <div className="container py-4">
+            <h2 className="mb-4">Contacto</h2>
             <form>
-                <div className="name">
-                    <label>
-                        Nombre <br />
-                        <input type="text" placeholder="Fabricio" />
-                    </label>
+                <div className="mb-3">
+                    <label htmlFor="nombre" className="form-label">Nombre</label>
+                    <input type="text" className="form-control" id="nombre" placeholder="Fabricio" />
                 </div>
 
-                <div className="surname">
-                    <label>
-                        Apellido <br />
-                        <input type="text" placeholder="Pérez" />
-                    </label>
+                <div className="mb-3">
+                    <label htmlFor="apellido" className="form-label">Apellido</label>
+                    <input type="text" className="form-control" id="apellido" placeholder="Pérez" />
                 </div>
 
-                <div className="email">
-                    <label>
-                        Email <br />
-                        <input type="email" placeholder="fabriper@gmail.com" />
-                    </label>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input type="email" className="form-control" id="email" placeholder="fabriper@gmail.com" />
                 </div>
 
-                <div className="txta">
-                    <label>
-                        Mensaje <br />
-                        <textarea
-                            placeholder="Dejá tu mensaje y te contactaremos a la brevedad..."
-                            maxLength="200"
-                            minLength="15"
-                        ></textarea>
-                    </label>
+                <div className="mb-3">
+                    <label htmlFor="mensaje" className="form-label">Mensaje</label>
+                    <textarea
+                        className="form-control"
+                        id="mensaje"
+                        placeholder="Dejá tu mensaje y te contactaremos a la brevedad..."
+                        maxLength="200"
+                        minLength="15"
+                        rows="4"
+                    ></textarea>
                 </div>
 
-                <div className="enviar">
-                    <label>
-                        <input type="submit" value="ENVIAR" />
-                    </label>
-                </div>
+                <button type="submit" className="btn btn-primary">ENVIAR</button>
             </form>
         </div>
     );
