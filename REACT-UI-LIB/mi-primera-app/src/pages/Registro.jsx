@@ -1,5 +1,4 @@
-// src/pages/Registro.jsx
-import '../App.css'; // o importá un CSS específico si lo tenés
+import '../App.css';
 
 const Registro = () => {
     return (

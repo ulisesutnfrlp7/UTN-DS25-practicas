@@ -1,4 +1,3 @@
-// src/components/Libro.jsx
 const Libro = ({ titulo, sinopsis, imagen }) => {
     return (
         <div className="libro">
@@ -9,4 +8,4 @@ const Libro = ({ titulo, sinopsis, imagen }) => {
     );
 };
 
-export default Libro;
+export default Libro; 
