@@ -1,5 +1,3 @@
-// src/pages/Contacto.jsx
-
 const Contacto = () => {
     return (
         <div className="form">

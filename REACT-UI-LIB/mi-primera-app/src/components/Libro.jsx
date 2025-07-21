@@ -8,4 +8,4 @@ const Libro = ({ titulo, sinopsis, imagen }) => {
     );
 };
 
-export default Libro; 
+export default Libro;
