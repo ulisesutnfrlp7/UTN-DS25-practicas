@@ -6,4 +6,5 @@ export const menuItems = [
     { ruta: '/registro', label: 'REGISTRO' },
     { ruta: '/contacto', label: 'CONTACTO' },
     { ruta: '/', label: 'PRINCIPAL' },
+    { ruta: "/catalogo", label: "CATÁLOGO COMPLETO" }
 ];

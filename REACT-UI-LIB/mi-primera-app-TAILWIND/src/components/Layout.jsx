@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <Menu />
-      <main className="flex flex-wrap justify-between p-5 gap-5">
+      <main className="w-full px-5 space-y-14">
         {children}
       </main>
       <Footer />

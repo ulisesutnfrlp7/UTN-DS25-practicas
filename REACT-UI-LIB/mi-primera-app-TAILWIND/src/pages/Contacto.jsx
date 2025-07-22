@@ -42,7 +42,7 @@ const Contacto = () => {
               placeholder="Dejá tu mensaje y te contactaremos a la brevedad..."
               maxLength="200"
               minLength="15"
-              className="w-full h-[200px] text-[24px] font-mono border-[2.4px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-4 resize-none"
+              className="w-[700px] mx-auto block h-[200px] text-[24px] font-mono border-[2.4px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-4 resize-none"
             ></textarea>
           </label>
         </div>
