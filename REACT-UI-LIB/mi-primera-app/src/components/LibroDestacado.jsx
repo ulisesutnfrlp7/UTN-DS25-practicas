@@ -1,11 +1,11 @@
-const LibroDestacado = ({ titulo, descripcion, imagen, enlace }) => {
+const LibroDestacado = ({ titulo, descripcion, imagen }) => {
     return (
-        <article className="libro-destacado">
-            <a href={enlace} className="libro-titulo">{titulo}</a>
-            <p className="libro-descripcion">{descripcion}</p>
-            <img src={imagen} alt={titulo} className="libro-imagen" />
-        </article>
+      <article className="libro-destacado">
+        <h2 className="libro-titulo">{titulo}</h2>
+        <p className="libro-descripcion">{descripcion}</p>
+        <img src={imagen} alt={titulo} className="libro-imagen" />
+      </article>
     );
-};
-
-export default LibroDestacado;
+  };
+  
+  export default LibroDestacado;
