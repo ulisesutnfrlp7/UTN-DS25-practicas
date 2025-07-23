@@ -83,8 +83,8 @@ Este proyecto React implementa una librería digital, utilizando Tailwind CSS pa
 
 ## 📁 ESTRUCTURA DEL REPOSITORIO
 
-📂 `src/`
-├── `components/` → Layout, menú, libros, formulario, reseñas, etc.
+📂 `src/` <br>
+├── `components/` → Layout, menú, libros, formulario, reseñas, etc. <br>
 ├── `context/` → `UsuarioContext.jsx`. <br>
 ├── `data/` → catálogo por sección y destacados, también ítems del menú. Más que nada para que el relleno de información se encuentre apartado del resto del funcionamiento de los componentes. <br>
 ├── `hooks/` → Custom Hooks. <br>
