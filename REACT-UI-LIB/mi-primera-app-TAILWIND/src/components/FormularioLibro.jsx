@@ -32,7 +32,7 @@ const FormularioLibro = ({ setCatalogo }) => {
       sinopsis: "",
     });
 
-    setMensaje("¡LIBRO AGREGADO CON ÉXITO AL FINAL DEL CATÁLOGO!");
+    setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO AL FINAL DEL CATÁLOGO!");
     setTimeout(() => setMensaje(""), 2000);
   };
 
