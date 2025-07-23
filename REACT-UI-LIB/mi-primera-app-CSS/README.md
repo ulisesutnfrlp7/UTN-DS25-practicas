@@ -1,12 +1,3 @@
-# React + Vite
+# 📚 PROYECTO: LIBRERÍA YENNY
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Este proyecto React implementa una librería digital, utilizando Tailwind CSS para estilos y los múltiples conceptos modernos que vimos en clase como Context, Custom Hooks, manejo de formularios, y conexión a una API externa. En esta primera versión, incluímos las primeras partes de la librería digital, pero estilando con CSS para comparar visualmente en lo que se transformaría luego con TAILWIND. Simplemente ese era su objetivo, por lo que no se le añadieron muchas cosas. Solo están implementadas todas las páginas (menos CATÁLOGO COMPLETO) y, como conceptos, la navegación con React Router con Link y los conceptos básicos de React (jsx, props, componentes, mapeado).
