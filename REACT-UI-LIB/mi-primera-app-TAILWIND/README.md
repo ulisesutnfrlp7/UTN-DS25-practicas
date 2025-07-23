@@ -13,8 +13,7 @@ Este proyecto React implementa una librería digital, utilizando Tailwind CSS pa
 - `Layout.jsx` → grilla vertical con `min-h-screen`.
 - `Contenido.jsx`, `Menu.jsx`, `Libro.jsx`, `FormularioLibro.jsx`, etc. → uso de grillas `grid-cols`, `max-w`, `rounded-md`, `font-[Impact]`, `shadow`, `hover:scale`, entre otros.
 
-**RESUMEN:**  
-La interfaz se construyó exclusivamente con utilidades de Tailwind CSS, manteniendo una estética uniforme y responsiva.
+**RESUMEN:** la interfaz se construyó exclusivamente con utilidades de Tailwind CSS, manteniendo una estética uniforme y responsiva.
 
 ---
 
@@ -74,7 +73,7 @@ La interfaz se construyó exclusivamente con utilidades de Tailwind CSS, manteni
 
 **APLICADOS Y DESARROLLADOS EN:**
 
-| Hook             | Archivo            | Función principal                      | Aplicado en         |
+| HOOK             | ARCHIVO            | FUNCIÓN PRINCIPAL                      | APLICADO EN         |
 |------------------|--------------------|----------------------------------------|----------------------|
 | `useConfirmacion`| `useConfirmacion.js`| Mensaje temporal después de acción     | `Registro.jsx`, `Contacto.jsx` |
 | `useForm`        | `useForm.js`        | Manejo de formulario + validación      | `Registro.jsx`, `Contacto.jsx` |
@@ -84,13 +83,13 @@ La interfaz se construyó exclusivamente con utilidades de Tailwind CSS, manteni
 
 ## 📁 ESTRUCTURA DEL REPOSITORIO
 
-📂 `src/`  
+📂 `src/`
 ├── `components/` → Layout, menú, libros, formulario, reseñas, etc.
-├── `context/` → `UsuarioContext.jsx`.
-├── `data/` → catálogo por sección y destacados, también ítems del menú. Más que nada para que el relleno de información se encuentre apartado del resto del funcionamiento de los componentes.
-├── `hooks/` → Custom Hooks.
-├── `pages/` → vistas: catálogo, contacto, registro, secciones.
-├── `App.jsx` → enrutador central.
+├── `context/` → `UsuarioContext.jsx`. <br>
+├── `data/` → catálogo por sección y destacados, también ítems del menú. Más que nada para que el relleno de información se encuentre apartado del resto del funcionamiento de los componentes. <br>
+├── `hooks/` → Custom Hooks. <br>
+├── `pages/` → vistas: catálogo, contacto, registro, secciones. <br>
+├── `App.jsx` → enrutador central. <br>
 ├── `main.jsx`, `App.css`, `index.html` → entrada del proyecto. `App.css` contiene solamente algunos estilos CSS muy generales. Todo lo demás está hecho con Tailwind.
 
 ---
