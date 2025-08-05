@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Libro from "./Libro";
 
-const ListaLibros = ({ catalogo }) => {
+const ListaLibros = ({ catalogo, onDelete, onEdit }) => {
   const [busqueda, setBusqueda] = useState("");
 
   const librosFiltrados = catalogo.filter((libro) =>
@@ -24,7 +24,12 @@ const ListaLibros = ({ catalogo }) => {
       <div className="flex flex-col w-full gap-10">
         {librosFiltrados.length > 0 ? (
           librosFiltrados.map((libro, index) => (
-            <Libro key={index} {...libro} />
+            <Libro 
+            key={index} 
+            {...libro} 
+            onDelete={() => onDelete(libro.titulo)}
+            onEdit={() => onEdit(libro)} // placeholder para el paso sig
+            />
           ))
         ) : (
           <p className="text-center text-lg font-[Impact] text-gray-500 col-span-full">
