@@ -1,20 +1,16 @@
-// src/components/ListaLibros.jsx
-
 import { useState } from "react";
 import Libro from "./Libro";
 
-const ListaLibros = ({ catalogo }) => {
+const ListaLibros = ({ catalogo, onEdit, onDelete }) => {
   const [busqueda, setBusqueda] = useState("");
 
   const librosFiltrados = catalogo.filter((libro) =>
-    libro.titulo.toLowerCase().includes(busqueda.toLowerCase())
+    libro.title_and_author.toLowerCase().includes(busqueda.toLowerCase())
   );
 
   return (
     <section className="w-full px-6 py-4 space-y-10">
-      <h2 className="text-4xl font-[Impact] text-center">
-        BÚSQUEDA
-      </h2>
+      <h2 className="text-4xl font-[Impact] text-center">BÚSQUEDA</h2>
       <input
         type="text"
         placeholder="BUSCAR LIBRO POR TÍTULO Y/O AUTOR..."
@@ -25,8 +21,16 @@ const ListaLibros = ({ catalogo }) => {
 
       <div className="flex flex-col w-full gap-10">
         {librosFiltrados.length > 0 ? (
-          librosFiltrados.map((libro, index) => (
-            <Libro key={index} {...libro} />
+          librosFiltrados.map((libro) => (
+            <Libro
+              key={libro.id}
+              id={libro.id}
+              titulo={libro.title_and_author}
+              sinopsis={libro.description}
+              imagen={libro.image}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           ))
         ) : (
           <p className="text-center text-lg font-[Impact] text-gray-500 col-span-full">
