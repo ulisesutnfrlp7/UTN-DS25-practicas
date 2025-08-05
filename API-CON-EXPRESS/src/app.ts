@@ -6,8 +6,11 @@ import { userRoutes } from './routes/user.routes';
 import { contactRoutes } from './routes/contact.routes';
 import { logRequest } from './middlewares/logger.middleware';
 import { handleError } from './middlewares/error.middleware';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 // Middleware para parsear JSON
 app.use(express.json());

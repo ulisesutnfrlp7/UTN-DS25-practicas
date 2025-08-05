@@ -13,7 +13,7 @@ let books: Book[] = [
   },
   {
     id: 2,
-    title_and_author: 'Quixote - Papapa',
+    title_and_author: '1984 - Orwell',
     description: 'A dystopian novel about surveillance and authoritarianism.',
     image: 'example',
     createdAt: new Date()
