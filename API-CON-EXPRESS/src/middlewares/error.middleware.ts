@@ -1,4 +1,5 @@
 // src/middlewares/error.middleware.ts
+
 import { Request, Response, NextFunction } from 'express';
 
 export function handleError(err: any, req: Request, res: Response, next: NextFunction) {

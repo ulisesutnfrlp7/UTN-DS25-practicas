@@ -9,6 +9,7 @@ let books: Book[] = [
     title: 'Don Quixote',
     author: 'Cervantes',
     description: 'A classic Spanish novel about chivalry and madness.',
+    image: 'example',
     createdAt: new Date()
   },
   {
@@ -16,8 +17,9 @@ let books: Book[] = [
     title: '1984',
     author: 'Orwell',
     description: 'A dystopian novel about surveillance and authoritarianism.',
+    image: 'example',
     createdAt: new Date()
-  }
+  },
 ];
 
 // Obtener todos los libros

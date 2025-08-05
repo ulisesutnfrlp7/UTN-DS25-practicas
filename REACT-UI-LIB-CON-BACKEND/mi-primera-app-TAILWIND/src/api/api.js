@@ -1,0 +1,40 @@
+const BASE_URL = 'http://localhost:3000/api';
+
+// Libros
+export async function getBooks() {
+  const res = await fetch(`${BASE_URL}/books`);
+  if (!res.ok) throw new Error('Error al obtener libros');
+  return res.json();
+}
+
+export async function createBook(bookData) {
+  const res = await fetch(`${BASE_URL}/books`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bookData)
+  });
+  if (!res.ok) throw new Error('Error al crear libro');
+  return res.json();
+}
+
+// Usuarios
+export async function createUser(userData) {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+  });
+  if (!res.ok) throw new Error('Error al registrar usuario');
+  return res.json();
+}
+
+// Contacto
+export async function sendMessage(messageData) {
+  const res = await fetch(`${BASE_URL}/contact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(messageData)
+  });
+  if (!res.ok) throw new Error('Error al enviar mensaje');
+  return res.json();
+}

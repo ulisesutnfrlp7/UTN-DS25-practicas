@@ -2,6 +2,8 @@
 
 import express from 'express';
 import { bookRoutes } from './routes/book.routes';
+import { userRoutes } from './routes/user.routes';
+import { contactRoutes } from './routes/contact.routes';
 import { logRequest } from './middlewares/logger.middleware';
 import { handleError } from './middlewares/error.middleware';
 
@@ -15,6 +17,8 @@ app.use(logRequest);
 
 // Conexión de rutas
 app.use('/api/books', bookRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Middleware para manejar errores ---> siempre al final
 app.use(handleError);

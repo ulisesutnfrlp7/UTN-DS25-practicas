@@ -3,6 +3,7 @@
 import { useUsuario } from "../context/UsuarioContext";
 import { useForm } from "../hooks/useForm";
 import { useConfirmacion } from "../hooks/useConfirmacion";
+import { createUser } from "../api/api";
 
 const Registro = () => {
   const { setUsuario } = useUsuario();
@@ -33,11 +34,16 @@ const Registro = () => {
     validarCampos
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validar()) {
-      setUsuario({ ...formulario, registrado: true });
-      mostrarConfirmacion();
+      try {
+        const data = await createUser(formulario);
+        setUsuario({ ...data.user });
+        mostrarConfirmacion();
+      } catch (error) {
+        console.error("❌ Error en el registro:", error.message);
+      }
     }
   };
 

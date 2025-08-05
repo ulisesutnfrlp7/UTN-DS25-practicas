@@ -1,11 +1,11 @@
-// src/components/FormularioLibro.jsx
-
 import { useState } from "react";
+import { createBook, getBooks } from "../api/api"; // Importamos funciones del backend
 
 const FormularioLibro = ({ setCatalogo }) => {
   const [datos, setDatos] = useState({
     titulo: "",
     sinopsis: "",
+    imagen: "",
   });
 
   const [mensaje, setMensaje] = useState("");
@@ -23,19 +23,28 @@ const FormularioLibro = ({ setCatalogo }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!datos.titulo || !datos.sinopsis || !datos.imagen) return;
 
-    setCatalogo((prev) => [...prev, datos]);
+    try {
+      await createBook(datos); // Enviamos el nuevo libro al backend
+      const data = await getBooks(); // Actualizamos el catálogo desde el backend
+      setCatalogo(data.books);
 
-    setDatos({
-      titulo: "",
-      sinopsis: "",
-    });
+      setDatos({
+        titulo: "",
+        sinopsis: "",
+        imagen: "",
+      });
 
-    setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO AL FINAL DEL CATÁLOGO!");
-    setTimeout(() => setMensaje(""), 2000);
+      setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO!");
+      setTimeout(() => setMensaje(""), 2000);
+    } catch (error) {
+      console.error("❌ Error al agregar libro:", error.message);
+      setMensaje("❌ ERROR AL AGREGAR LIBRO");
+      setTimeout(() => setMensaje(""), 2000);
+    }
   };
 
   return (
@@ -88,7 +97,7 @@ const FormularioLibro = ({ setCatalogo }) => {
           AGREGAR LIBRO
         </button>
       </form>
-      <br></br>
+      <br />
       {mensaje && (
         <div className="mt-8 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity duration-500">
           {mensaje}

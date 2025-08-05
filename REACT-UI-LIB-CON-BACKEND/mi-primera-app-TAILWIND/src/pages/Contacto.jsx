@@ -3,6 +3,7 @@
 import { useUsuario } from "../context/UsuarioContext";
 import { useForm } from "../hooks/useForm";
 import { useConfirmacion } from "../hooks/useConfirmacion";
+import { sendMessage } from "../api/api";
 
 const Contacto = () => {
   const { usuario } = useUsuario();
@@ -32,10 +33,16 @@ const Contacto = () => {
     validarCampos
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validar()) {
-      mostrarConfirmacion();
+      try {
+        const data = await sendMessage(formulario);
+        console.log("✅ Mensaje enviado:", data);
+        mostrarConfirmacion();
+      } catch (error) {
+        console.error("❌ Error en el envío:", error.message);
+      }
     }
   };
 
