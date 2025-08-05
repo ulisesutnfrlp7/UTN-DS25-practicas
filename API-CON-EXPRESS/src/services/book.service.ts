@@ -6,16 +6,14 @@ import { Book, CreateBookRequest, UpdateBookRequest } from '../types/book.types'
 let books: Book[] = [
   {
     id: 1,
-    title: 'Don Quixote',
-    author: 'Cervantes',
+    title_and_author: 'Qixote - Cervantes',
     description: 'A classic Spanish novel about chivalry and madness.',
     image: 'example',
     createdAt: new Date()
   },
   {
     id: 2,
-    title: '1984',
-    author: 'Orwell',
+    title_and_author: 'Quixote - Papapa',
     description: 'A dystopian novel about surveillance and authoritarianism.',
     image: 'example',
     createdAt: new Date()

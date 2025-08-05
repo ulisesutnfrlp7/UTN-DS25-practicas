@@ -3,9 +3,9 @@
 export interface CreateUserRequest {
   nombre: string;
   apellido: string;
-  sexo: 'masculino' | 'femenino';
   contraseña: string;
-  temaFavorito: string;
+  sexo: 'masculino' | 'femenino';
+  temaFavorito: 'Novela' | 'Terror' | 'Ciencia Ficción' | 'Policial';
 }
 
 export interface User extends CreateUserRequest {

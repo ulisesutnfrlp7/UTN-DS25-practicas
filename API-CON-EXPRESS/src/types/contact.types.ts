@@ -1,4 +1,4 @@
-// src/types/book.types.ts
+// src/types/contact.types.ts
 
 export interface ContactMessageRequest {
     nombre: string;
