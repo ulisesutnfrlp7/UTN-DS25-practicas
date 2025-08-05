@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:3000/api';
 
-// 📚 Libros
+// Libros
 export async function getBooks() {
   const res = await fetch(`${BASE_URL}/books`);
   if (!res.ok) throw new Error('Error al obtener libros');
@@ -35,7 +35,7 @@ export async function updateBook(bookData) {
   return res.json();
 }
 
-// 👤 Usuarios
+// Usuarios
 export async function createUser(userData) {
   const res = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
@@ -46,7 +46,7 @@ export async function createUser(userData) {
   return res.json();
 }
 
-// ✉️ Contacto
+// Contacto
 export async function sendMessage(messageData) {
   const res = await fetch(`${BASE_URL}/contact`, {
     method: 'POST',
