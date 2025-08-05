@@ -44,7 +44,7 @@ const Catalogo = () => {
 
   const handleUpdate = async (libroActualizado) => {
     try {
-      const libroFinal = await updateBook(libroActualizado);
+      const { book: libroFinal } = await updateBook(libroActualizado);
       setCatalogo(prev =>
         prev.map(libro =>
           libro.id === libroFinal.id ? libroFinal : libro

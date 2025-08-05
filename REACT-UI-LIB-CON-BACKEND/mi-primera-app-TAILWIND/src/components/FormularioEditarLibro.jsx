@@ -11,7 +11,11 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
 
   useEffect(() => {
     if (libro) {
-      setDatos(libro);
+      setDatos({
+        titulo: libro.title_and_author || "",
+        sinopsis: libro.description || "",
+        imagen: libro.image || ""
+      });
     }
   }, [libro]);
 
@@ -31,7 +35,12 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!datos.titulo || !datos.sinopsis || !datos.imagen) return;
-    onUpdate(datos);
+    onUpdate({
+      id: libro.id,
+      title_and_author: datos.titulo,
+      description: datos.sinopsis,
+      image: datos.imagen
+    });
   };
 
   return (
