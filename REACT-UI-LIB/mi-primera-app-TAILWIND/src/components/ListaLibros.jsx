@@ -1,3 +1,5 @@
+// src/components/ListaLibros.jsx
+
 import { useState } from "react";
 import Libro from "./Libro";
 
@@ -28,7 +30,7 @@ const ListaLibros = ({ catalogo, onDelete, onEdit }) => {
             key={index} 
             {...libro} 
             onDelete={() => onDelete(libro.titulo)}
-            onEdit={() => onEdit(libro)} // placeholder para el paso sig
+            onEdit={() => onEdit(libro)}
             />
           ))
         ) : (

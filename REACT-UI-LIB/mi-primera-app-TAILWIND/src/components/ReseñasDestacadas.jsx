@@ -1,3 +1,5 @@
+// src/components/ReseñasDestacadas.jsx
+
 import { useFetch } from "../hooks/useFetch";
 import { useState, useEffect } from "react";
 

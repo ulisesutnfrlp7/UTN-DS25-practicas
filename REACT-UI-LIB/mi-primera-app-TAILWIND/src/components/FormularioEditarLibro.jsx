@@ -1,3 +1,5 @@
+// src/components/FormularioEditarLibro.jsx
+
 import { useState, useEffect } from "react";
 
 const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {

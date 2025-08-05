@@ -1,3 +1,5 @@
+// src/components/Header.jsx
+
 import logoYenny from '../assets/images/yenny-el-ateneo.jpg';
 
 const Header = () => {

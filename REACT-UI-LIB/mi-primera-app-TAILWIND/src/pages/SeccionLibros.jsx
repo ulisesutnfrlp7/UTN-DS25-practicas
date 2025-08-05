@@ -1,3 +1,5 @@
+// src/pages/SeccionLibros.jsx
+
 import { useParams } from 'react-router-dom';
 import Libro from '../components/Libro';
 import { librosPorSeccion } from '../data/librosPorSeccion';

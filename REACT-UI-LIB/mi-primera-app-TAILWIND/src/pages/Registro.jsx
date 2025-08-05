@@ -1,3 +1,5 @@
+// src/pages/Registro.jsx
+
 import { useUsuario } from "../context/UsuarioContext";
 import { useForm } from "../hooks/useForm";
 import { useConfirmacion } from "../hooks/useConfirmacion";

@@ -1,3 +1,5 @@
+// src/pages/Catalogo.jsx
+
 import { useEffect, useState } from 'react';
 import FormularioLibro from '../components/FormularioLibro';
 import FormularioEditarLibro from '../components/FormularioEditarLibro'

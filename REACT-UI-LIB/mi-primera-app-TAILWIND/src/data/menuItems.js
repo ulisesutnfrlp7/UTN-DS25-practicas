@@ -1,3 +1,5 @@
+// src/data/menuItems.js
+
 export const menuItems = [
     { ruta: '/novelas', label: 'SECCIÓN NOVELAS' },
     { ruta: '/ciencia-ficcion', label: 'SECCIÓN CIENCIA FICCIÓN' },

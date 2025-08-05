@@ -1,3 +1,5 @@
+// src/components/Menu.jsx
+
 import { Link } from 'react-router-dom';
 import { menuItems } from '../data/menuItems';
 

@@ -1,3 +1,5 @@
+// src/data/librosDestacados.js
+
 export const librosDestacados = [
     {
       id: 1,

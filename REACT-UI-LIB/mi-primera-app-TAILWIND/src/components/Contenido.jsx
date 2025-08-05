@@ -1,3 +1,5 @@
+// src/components/Contenido.jsx
+
 import { Link } from 'react-router-dom';
 import LibroDestacado from './LibroDestacado';
 import { librosDestacados } from '../data/librosDestacados';

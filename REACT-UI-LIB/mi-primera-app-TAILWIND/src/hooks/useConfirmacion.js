@@ -1,3 +1,5 @@
+// src/hooks/useConfirmacion.js
+
 import { useState, useEffect } from "react";
 
 export function useConfirmacion(duracion = 4000) {

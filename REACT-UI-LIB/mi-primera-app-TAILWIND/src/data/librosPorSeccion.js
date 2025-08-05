@@ -1,3 +1,5 @@
+// src/data/librosPorSeccion.js
+
 export const librosPorSeccion = {
     novelas: [
       {

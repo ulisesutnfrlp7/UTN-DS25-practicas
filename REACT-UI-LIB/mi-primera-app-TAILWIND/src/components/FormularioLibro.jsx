@@ -1,3 +1,5 @@
+// src/components/FormularioLibro.jsx
+
 import { useState } from "react";
 
 const FormularioLibro = ({ setCatalogo }) => {
@@ -25,11 +27,17 @@ const FormularioLibro = ({ setCatalogo }) => {
     e.preventDefault();
     if (!datos.titulo || !datos.sinopsis || !datos.imagen) return;
 
-    setCatalogo((prev) => [...prev, datos]);
+    const nuevoLibro = {
+      ...datos,
+      id: Date.now()
+    };
+
+    setCatalogo((prev) => [...prev, nuevoLibro]);
 
     setDatos({
       titulo: "",
       sinopsis: "",
+      imagen: ""
     });
 
     setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO AL FINAL DEL CATÁLOGO!");

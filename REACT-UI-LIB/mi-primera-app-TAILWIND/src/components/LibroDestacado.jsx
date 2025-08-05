@@ -1,3 +1,5 @@
+// src/components/LibroDestacado.jsx
+
 const LibroDestacado = ({ titulo, descripcion, imagen }) => {
   return (
     <article className="mb-10 p-4 border border-black rounded-md hover:shadow-lg transition duration-300">
