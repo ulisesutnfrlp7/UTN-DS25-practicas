@@ -9,6 +9,12 @@ export async function getBooks() {
   return res.json();
 }
 
+export async function getBooksByCategory(categoria) {
+  const res = await fetch(`${BASE_URL}/books/by-category?categoria=${categoria}`);
+  if (!res.ok) throw new Error('Error al obtener libros por categoría');
+  return res.json();
+}
+
 export async function createBook(bookData) {
   const res = await fetch(`${BASE_URL}/books`, {
     method: 'POST',

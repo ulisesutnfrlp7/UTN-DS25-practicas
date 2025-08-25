@@ -27,13 +27,14 @@ const FormularioLibro = ({ onLibroAgregado }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!datos.titulo || !datos.sinopsis || !datos.imagen) return;
+    if (!datos.titulo || !datos.sinopsis || !datos.imagen || !datos.categoria) return;
 
     try {
       await createBook({
         title_and_author: datos.titulo,
         description: datos.sinopsis,
-        image: datos.imagen
+        image: datos.imagen,
+        categoria: datos.categoria
       });
 
       setDatos({ titulo: "", sinopsis: "", imagen: "" });
@@ -80,6 +81,22 @@ const FormularioLibro = ({ onLibroAgregado }) => {
             className="mt-2 w-full h-32 px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md resize-none"
           />
         </label>
+
+        <label className="block text-[24px] font-[Impact] text-brown">
+            Categoría o Género Principal
+            <select
+              name="categoria"
+              value={datos.categoria}
+              onChange={handleChange}
+              className="mt-2 w-full h-32 px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md resize-none"
+            >
+              <option value="" disabled selected>SELECCIONE UNA OPCIÓN</option>
+              <option value="Novela">Novela</option>
+              <option value="Terror">Terror</option>
+              <option value="CienciaFiccion">Ciencia Ficción</option>
+              <option value="Policial">Policial</option>
+            </select>
+          </label>
 
         <label className="block text-[24px] font-[Impact] text-brown">
           Imagen

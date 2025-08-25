@@ -9,6 +9,9 @@ const router = Router();
 // GET /api/books
 router.get('/', bookController.getAllBooks);
 
+// GET /api/books/by-category
+router.get('/by-category', bookController.getBooksByCategory);
+
 // GET /api/books/:id 
 router.get('/:id', bookController.getBookById);
 

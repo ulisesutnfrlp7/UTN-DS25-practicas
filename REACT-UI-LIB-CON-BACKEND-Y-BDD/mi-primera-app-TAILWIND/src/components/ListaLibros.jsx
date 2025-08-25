@@ -28,6 +28,7 @@ const ListaLibros = ({ catalogo, onEdit, onDelete }) => {
               titulo={libro.title_and_author}
               sinopsis={libro.description}
               imagen={libro.image}
+              categoria={libro.categoria}
               onEdit={onEdit}
               onDelete={onDelete}
             />

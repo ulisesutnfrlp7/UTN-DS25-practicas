@@ -14,7 +14,8 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
       setDatos({
         titulo: libro.title_and_author || "",
         sinopsis: libro.description || "",
-        imagen: libro.image || ""
+        imagen: libro.image || "",
+        categoria: libro.categoria || ""
       });
     }
   }, [libro]);
@@ -34,12 +35,13 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!datos.titulo || !datos.sinopsis || !datos.imagen) return;
+    if (!datos.titulo || !datos.sinopsis || !datos.imagen || !datos.categoria) return;
     onUpdate({
       id: libro.id,
       title_and_author: datos.titulo,
       description: datos.sinopsis,
-      image: datos.imagen
+      image: datos.imagen,
+      categoria: datos.categoria
     });
   };
 

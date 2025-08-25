@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,28 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Category {
+  Novela
+  Terror
+  CienciaFiccion
+  Policial
+}
+
 model Book {
-  id              Int     @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   title_and_author String
-  description     String
-  image           String
-  createdAt       DateTime @default(now())
+  description      String
+  image            String
+  categoria        Category
+  createdAt        DateTime @default(now())
 }
 
 model ContactMessage {
-  id         Int      @id @default(autoincrement())
-  nombre     String
-  apellido   String
-  email      String
-  mensaje    String
-  enviadoEn  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  email     String
+  mensaje   String
+  enviadoEn DateTime @default(now())
 }
 
 model User {
   id           Int      @id @default(autoincrement())
   nombre       String
   apellido     String
-  contraseña   String
+  contraseña  String
   sexo         String
   temaFavorito String
   createdAt    DateTime @default(now())

@@ -2,6 +2,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { CreateBookRequest, UpdateBookRequest, BookResponse, BooksListResponse } from '../types/book.types';
+import { Category } from '../types/enums.types'
 import * as bookService from '../services/book.service';
 
 export async function getAllBooks(
@@ -15,6 +16,28 @@ export async function getAllBooks(
       books,
       total: books.length
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getBooksByCategory(
+  req: Request<{}, BooksListResponse, {}, { categoria: string }>,
+  res: Response<BooksListResponse>,
+  next: NextFunction
+) {
+  try {
+    
+    const rawCategoria = req.query.categoria.trim();
+    console.log("🧪 Categoria recibida:", rawCategoria);
+    const categoriaNormalizada = rawCategoria?.charAt(0).toUpperCase() + rawCategoria?.slice(1);
+
+    if (!Object.values(Category).includes(categoriaNormalizada as Category)) {
+      return res.status(400).json({ books: [], total: 0 });
+    }
+    
+    const books = await bookService.getBooksByCategory(categoriaNormalizada as Category);
+    res.json({ books, total: books.length });
   } catch (error) {
     next(error);
   }

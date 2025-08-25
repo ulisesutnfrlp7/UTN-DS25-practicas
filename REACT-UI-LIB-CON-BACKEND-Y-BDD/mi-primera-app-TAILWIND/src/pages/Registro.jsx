@@ -15,6 +15,7 @@ const Registro = () => {
     if (data.apellido.trim() === "") errores.push("El apellido es obligatorio.");
     if (data.contraseña.length < 8) errores.push("La contraseña debe tener al menos 8 caracteres.");
     if (data.sexo === "") errores.push("Debes seleccionar un sexo.");
+    if (data.temaFavorito === "") errores.push("Debes seleccionar un tema favorito.");
     return errores;
   };
 
@@ -140,6 +141,7 @@ const Registro = () => {
               onChange={handleChange}
               className="w-full text-[24px] font-mono border-2 border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 mt-2"
             >
+              <option value="" disabled selected>SELECCIONE UNA OPCIÓN</option>
               <option value="Novela">Novela</option>
               <option value="Terror">Terror</option>
               <option value="Ciencia Ficción">Ciencia Ficción</option>
