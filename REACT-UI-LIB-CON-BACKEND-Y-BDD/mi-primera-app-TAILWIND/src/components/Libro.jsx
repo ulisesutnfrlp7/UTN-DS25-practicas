@@ -1,3 +1,5 @@
+// src/components/Libro.jsx
+
 const Libro = ({ id, titulo, sinopsis, categoria, imagen, onEdit, onDelete }) => {
   return (
     <article className="w-full max-w-5xl mx-auto p-6 border-2 border-black rounded-md bg-white shadow-md transition-all duration-300 hover:scale-[1.01]">

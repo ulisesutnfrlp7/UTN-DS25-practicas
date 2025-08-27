@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createBook } from "../api/api";
+import { supabase } from '../api/supabaseClient'
 
 const FormularioLibro = ({ onLibroAgregado }) => {
   const [datos, setDatos] = useState({
@@ -12,6 +13,8 @@ const FormularioLibro = ({ onLibroAgregado }) => {
 
   const [mensaje, setMensaje] = useState("");
 
+  const [archivoImagen, setArchivoImagen] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDatos((prev) => ({ ...prev, [name]: value }));
@@ -20,6 +23,7 @@ const FormularioLibro = ({ onLibroAgregado }) => {
   const handleImage = (e) => {
     const archivo = e.target.files[0];
     if (archivo) {
+      setArchivoImagen(archivo);
       const urlTemporal = URL.createObjectURL(archivo);
       setDatos((prev) => ({ ...prev, imagen: urlTemporal }));
     }
@@ -27,20 +31,34 @@ const FormularioLibro = ({ onLibroAgregado }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!datos.titulo || !datos.sinopsis || !datos.imagen || !datos.categoria) return;
-
+    if (!datos.titulo || !datos.sinopsis || !archivoImagen || !datos.categoria) return;
+  
     try {
+      // Subir imagen al bucket
+      const nombreArchivo = `${Date.now()}_${archivoImagen.name}`;
+      const { data, error } = await supabase.storage
+        .from('libros') // nombre del bucket
+        .upload(nombreArchivo, archivoImagen);
+  
+      if (error) throw error;
+  
+      // Obtener URL pública
+      const urlPublica = supabase.storage
+        .from('libros')
+        .getPublicUrl(nombreArchivo).data.publicUrl;
+  
+      // Crear libro con URL pública
       await createBook({
         title_and_author: datos.titulo,
         description: datos.sinopsis,
-        image: datos.imagen,
+        image: urlPublica,
         categoria: datos.categoria
       });
-
+  
       setDatos({ titulo: "", sinopsis: "", imagen: "" });
+      setArchivoImagen(null);
       setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO!");
-      onLibroAgregado(); // Refresca el catálogo desde el padre
-
+      onLibroAgregado();
       setTimeout(() => setMensaje(""), 2000);
     } catch (error) {
       console.error("❌ Error al agregar libro:", error.message);
