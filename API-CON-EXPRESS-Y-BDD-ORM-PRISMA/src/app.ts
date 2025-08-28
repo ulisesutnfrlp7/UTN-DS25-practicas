@@ -1,6 +1,7 @@
 // src/app.ts
 
 import express from 'express';
+import { authorRoutes } from './routes/author.routes'
 import { bookRoutes } from './routes/book.routes';
 import { userRoutes } from './routes/user.routes';
 import { contactRoutes } from './routes/contact.routes';
@@ -22,6 +23,7 @@ app.use(logRequest);
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/authors', authorRoutes);
 
 // Middleware para manejar errores ---> siempre al final
 app.use(handleError);

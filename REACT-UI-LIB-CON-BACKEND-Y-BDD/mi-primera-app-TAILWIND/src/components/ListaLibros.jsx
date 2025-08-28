@@ -4,9 +4,12 @@ import Libro from "./Libro";
 const ListaLibros = ({ catalogo, onEdit, onDelete }) => {
   const [busqueda, setBusqueda] = useState("");
 
-  const librosFiltrados = catalogo.filter((libro) =>
-    libro.title_and_author.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  const librosFiltrados = catalogo.filter((libro) => {
+    const t = (libro.title || "").toLowerCase();
+    const a = (libro.author?.name || "").toLowerCase();
+    const q = busqueda.toLowerCase();
+    return t.includes(q) || a.includes(q);
+  });
 
   return (
     <section className="w-full px-6 py-4 space-y-10">
@@ -25,10 +28,12 @@ const ListaLibros = ({ catalogo, onEdit, onDelete }) => {
             <Libro
               key={libro.id}
               id={libro.id}
-              titulo={libro.title_and_author}
+              titulo={libro.title}
+              autor={libro.author?.name}
               sinopsis={libro.description}
               imagen={libro.image}
               categoria={libro.categoria}
+              authorId={libro.authorId}
               onEdit={onEdit}
               onDelete={onDelete}
             />

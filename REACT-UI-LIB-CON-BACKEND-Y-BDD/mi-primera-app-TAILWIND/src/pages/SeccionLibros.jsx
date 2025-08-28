@@ -30,16 +30,14 @@ const SeccionLibros = () => {
         setError("Categoría no válida");
         return;
       }
-      console.log("📦 Enviando categoría al backend:", categoriaMap[categoria]);
       try {
         const librosCargados = await getBooksByCategory(categoriaMap[categoria]);
-        setLibros(librosCargados.books);
+        setLibros(librosCargados.books || []);
       } catch (error) {
         console.error("Error al cargar libros:", error);
         setError("No se pudieron cargar los libros");
       }
     };
-
     fetchLibros();
   }, [categoria]);
 
@@ -55,7 +53,7 @@ const SeccionLibros = () => {
         libros.map(libro => (
           <LibroSeccion
             key={libro.id}
-            titulo={libro.title_and_author}
+            titulo={`${libro.title} — ${libro.author?.name ?? ''}`}
             sinopsis={libro.description}
             imagen={libro.image}
           />

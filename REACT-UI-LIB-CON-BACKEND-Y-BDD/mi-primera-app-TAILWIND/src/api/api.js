@@ -2,6 +2,23 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 console.log("🌐 BASE_URL:", BASE_URL);
 
+// Autores
+export async function getAuthors() {
+  const res = await fetch(`${BASE_URL}/authors`);
+  if (!res.ok) throw new Error('Error obteniendo autores');
+  return res.json();
+}
+
+export async function createAuthor(name) {
+  const res = await fetch(`${BASE_URL}/authors`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+  if (!res.ok) throw new Error('Error creando autor');
+  return res.json();
+}
+
 // Libros
 export async function getBooks() {
   const res = await fetch(`${BASE_URL}/books`);

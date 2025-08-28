@@ -14,13 +14,21 @@ enum Category {
   Policial
 }
 
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String
+  books Book[]
+}
+
 model Book {
-  id               Int      @id @default(autoincrement())
-  title_and_author String
-  description      String
-  image            String
-  categoria        Category
-  createdAt        DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String
+  image          String
+  categoria      Category
+  authorId       Int
+  author         Author @relation(fields: [authorId], references: [id])
+  createdAt      DateTime @default(now())
 }
 
 model ContactMessage {
@@ -36,7 +44,7 @@ model User {
   id           Int      @id @default(autoincrement())
   nombre       String
   apellido     String
-  contraseña  String
+  contraseña   String
   sexo         String
   temaFavorito String
   createdAt    DateTime @default(now())
