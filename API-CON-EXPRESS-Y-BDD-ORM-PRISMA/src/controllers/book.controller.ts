@@ -74,6 +74,8 @@ export async function createBook(
   next: NextFunction
 ) {
   try {
+    console.log("📘 Datos recibidos en backend:", req.body);
+
     const newBook = await bookService.createBook(req.body);
     res.status(201).json({
       book: newBook,

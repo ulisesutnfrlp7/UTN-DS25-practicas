@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createBook, getAuthors, createAuthor } from "../api/api";
-import { supabase } from '../api/supabaseClient'
+import { supabase } from '../api/supabaseClient';
 
 const FormularioLibro = ({ onLibroAgregado }) => {
   const [datos, setDatos] = useState({
@@ -68,6 +68,8 @@ const FormularioLibro = ({ onLibroAgregado }) => {
       const urlPublica = supabase.storage
         .from('libros')
         .getPublicUrl(nombreArchivo).data.publicUrl;
+      
+      console.log("📷 URL pública de imagen:", urlPublica);
 
       // Crear libro
       await createBook({

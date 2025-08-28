@@ -12,6 +12,7 @@ const Catalogo = () => {
   const [libroEditando, setLibroEditando] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     cargarCatalogo();
@@ -33,8 +34,12 @@ const Catalogo = () => {
     try {
       await deleteBook(id);
       setCatalogo(prev => prev.filter(libro => libro.id !== id));
+      setMensaje("✅ ¡LIBRO ELIMINADO CON ÉXITO!");
+      setTimeout(() => setMensaje(""), 2000);
     } catch (err) {
       console.error("❌ Error al eliminar libro:", err.message);
+      setMensaje("❌ ERROR AL ELIMINAR LIBRO");
+      setTimeout(() => setMensaje(""), 2000);
     }
   };
 
@@ -50,9 +55,13 @@ const Catalogo = () => {
           libro.id === libroFinal.id ? libroFinal : libro
         )
       );
+      setMensaje("✅ ¡LIBRO MODIFICADO CON ÉXITO!");
+      setTimeout(() => setMensaje(""), 2000);
       setLibroEditando(null);
     } catch (err) {
       console.error("❌ Error al actualizar libro:", err.message);
+      setMensaje("❌ ERROR AL MODIFICAR LIBRO");
+      setTimeout(() => setMensaje(""), 2000);
     }
   };
 
@@ -66,6 +75,12 @@ const Catalogo = () => {
         />
       ) : (
         <FormularioLibro onLibroAgregado={cargarCatalogo} />
+      )}
+
+      {mensaje && (
+        <div className="mt-4 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity duration-500">
+          {mensaje}
+        </div>
       )}
 
       {loading ? (

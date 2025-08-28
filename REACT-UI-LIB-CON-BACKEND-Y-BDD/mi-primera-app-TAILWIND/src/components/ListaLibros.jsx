@@ -40,7 +40,7 @@ const ListaLibros = ({ catalogo, onEdit, onDelete }) => {
           ))
         ) : (
           <p className="text-center text-lg font-[Impact] text-gray-500 col-span-full">
-            No se encontraron libros con ese título y/o autor.
+            NO SE ENCONTRARON LIBROS CON ESE TÍTULO Y/O AUTOR.
           </p>
         )}
       </div>

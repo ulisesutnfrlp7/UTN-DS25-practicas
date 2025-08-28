@@ -4,6 +4,10 @@ import { Router } from 'express';
 
 import * as bookController from '../controllers/book.controller';
 
+import { validate } from '../middlewares/validation.middleware';
+
+import { createBookSchema, updateBookSchema } from '../validations/book.validation';
+
 const router = Router();
 
 // GET /api/books
@@ -16,10 +20,10 @@ router.get('/by-category', bookController.getBooksByCategory);
 router.get('/:id', bookController.getBookById);
 
 // POST /api/books
-router.post('/', bookController.createBook);
+router.post('/', validate(createBookSchema), bookController.createBook);
 
 // PUT /api/books/:id
-router.put('/:id', bookController.updateBook);
+router.put('/:id', validate(updateBookSchema), bookController.updateBook);
 
 // DELETE /api/books/:id
 router.delete('/:id', bookController.deleteBook);
