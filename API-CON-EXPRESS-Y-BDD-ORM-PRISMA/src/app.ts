@@ -1,6 +1,7 @@
 // src/app.ts
 
 import express from 'express';
+import dotenv from 'dotenv';
 import { authorRoutes } from './routes/author.routes'
 import { bookRoutes } from './routes/book.routes';
 import { userRoutes } from './routes/user.routes';
@@ -9,9 +10,16 @@ import { logRequest } from './middlewares/logger.middleware';
 import { handleError } from './middlewares/error.middleware';
 import cors from 'cors';
 
+dotenv.config();
+
 const app = express();
 
-app.use(cors());
+const corsOptions = { // Opciones de CORS (con defaults)
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -28,7 +36,9 @@ app.use('/api/authors', authorRoutes);
 // Middleware para manejar errores ---> siempre al final
 app.use(handleError);
 
+const PORT = process.env.PORT || 3000
+
 // Arranque del servidor
-app.listen(3000, () => {
-    console.log('🚀 Servidor corriendo en http://localhost:3000');
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
