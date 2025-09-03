@@ -27,15 +27,15 @@ const SeccionLibros = () => {
   useEffect(() => {
     const fetchLibros = async () => {
       if (!categoriaMap[categoria]) {
-        setError("Categoría no válida");
+        setError("CATEGORÍA NO VÁLIDA");
         return;
       }
       try {
         const librosCargados = await getBooksByCategory(categoriaMap[categoria]);
         setLibros(librosCargados.books || []);
       } catch (error) {
-        console.error("Error al cargar libros:", error);
-        setError("No se pudieron cargar los libros");
+        console.error("ERROR AL CARGAR LIBROS:", error);
+        setError("UPS! NO SE PUDIERON CARGAR LOS LIBROS...");
       }
     };
     fetchLibros();

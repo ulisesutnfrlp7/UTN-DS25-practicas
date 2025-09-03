@@ -84,13 +84,15 @@ Este proyecto React implementa una librería digital, utilizando Tailwind CSS pa
 ## 📁 ESTRUCTURA DEL REPOSITORIO
 
 📂 `src/` <br>
+├── `assets/images/` → imágenes para los libros destacados fijos y header, footer, etc. <br>
 ├── `components/` → Layout, menú, libros, formulario, reseñas, etc. <br>
 ├── `context/` → `UsuarioContext.jsx`. <br>
-├── `data/` → catálogo por sección y destacados, también ítems del menú. Más que nada para que el relleno de información se encuentre apartado del resto del funcionamiento de los componentes. <br>
+├── `data/` → catálogo por sección y destacados, también ítems del menú. Más que nada para que el relleno de información se encuentre apartado del resto del funcionamiento de los componentes. En esta etapa, el archivo librosSeccion.js se elimina, ya que la información que ahora se muestra proviene de una conexión a una base de datos.<br>
 ├── `hooks/` → Custom Hooks. <br>
 ├── `pages/` → vistas: catálogo, contacto, registro, secciones. <br>
 ├── `App.jsx` → enrutador central. <br>
 ├── `main.jsx`, `App.css`, `index.html` → entrada del proyecto. `App.css` contiene solamente algunos estilos CSS muy generales. Todo lo demás está hecho con Tailwind.
+├── `api/` → consume backend.
 
 ---
 
