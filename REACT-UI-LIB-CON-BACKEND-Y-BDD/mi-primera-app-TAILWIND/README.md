@@ -91,7 +91,7 @@ Este proyecto React implementa una librería digital, utilizando Tailwind CSS pa
 ├── `hooks/` → Custom Hooks. <br>
 ├── `pages/` → vistas: catálogo, contacto, registro, secciones. <br>
 ├── `App.jsx` → enrutador central. <br>
-├── `main.jsx`, `App.css`, `index.html` → entrada del proyecto. `App.css` contiene solamente algunos estilos CSS muy generales. Todo lo demás está hecho con Tailwind.
+├── `main.jsx`, `App.css`, `index.html` → entrada del proyecto. `App.css` contiene solamente algunos estilos CSS muy generales. Todo lo demás está hecho con Tailwind. <br>
 ├── `api/` → consume backend.
 
 ---
