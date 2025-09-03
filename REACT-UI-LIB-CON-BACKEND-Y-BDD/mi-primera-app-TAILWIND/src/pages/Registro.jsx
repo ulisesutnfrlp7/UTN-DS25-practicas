@@ -141,7 +141,7 @@ const Registro = () => {
               onChange={handleChange}
               className="w-full text-[24px] font-mono border-2 border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 mt-2"
             >
-              <option value="" disabled selected>SELECCIONE UNA OPCIÓN</option>
+              <option value="" disabled>SELECCIONE UNA OPCIÓN</option>
               <option value="Novela">Novela</option>
               <option value="Terror">Terror</option>
               <option value="Ciencia Ficción">Ciencia Ficción</option>
