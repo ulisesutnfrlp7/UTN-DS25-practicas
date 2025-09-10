@@ -94,6 +94,20 @@ const Registro = () => {
 
         <div className="space-y-6">
           <label className="block text-[40px]">
+            Email
+            <input
+              type="email"
+              name="email"
+              placeholder="fabriper@gmail.com"
+              value={formulario.email}
+              onChange={handleChange}
+              className="w-full text-[24px] font-mono border-2 border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3"
+            />
+          </label>
+        </div>
+
+        <div className="space-y-6">
+          <label className="block text-[40px]">
             Contraseña
             <input
               type="password"

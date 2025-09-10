@@ -7,6 +7,6 @@ export const menuItems = [
     { ruta: '/policiales', label: 'SECCIÓN POLICIALES' },
     { ruta: '/registro', label: 'REGISTRO' },
     { ruta: '/contacto', label: 'CONTACTO' },
-    { ruta: '/', label: 'PRINCIPAL' },
+    { ruta: '/home', label: 'PRINCIPAL' },
     { ruta: "/catalogo", label: "CATÁLOGO COMPLETO" }
 ];
