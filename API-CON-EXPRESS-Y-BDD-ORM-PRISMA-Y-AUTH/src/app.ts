@@ -2,6 +2,7 @@
 
 import express from 'express';
 import dotenv from 'dotenv';
+import { authRoutes } from './routes/auth.routes';
 import { authorRoutes } from './routes/author.routes'
 import { bookRoutes } from './routes/book.routes';
 import { userRoutes } from './routes/user.routes';
@@ -16,7 +17,9 @@ const app = express();
 
 const corsOptions = { // Opciones de CORS (con defaults)
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
@@ -28,6 +31,7 @@ app.use(express.json());
 app.use(logRequest);
 
 // Conexión de rutas
+app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
