@@ -45,6 +45,7 @@ Esta parte del proyecto implementa el backend de la librería digital Yenny, uti
 |   ├── author.types.ts
 │   ├── book.types.ts
 │   ├── user.types.ts
+|   ├── enums.types.ts
 │   └── contact.types.ts
 ```
 
