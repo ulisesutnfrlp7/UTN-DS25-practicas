@@ -1,34 +1,58 @@
 // src/hooks/useFetch.js
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getToken, clearToken } from "../helpers/auth";
 
-export function useFetch(url) {
+export function useFetch(
+  url,
+  options = {},
+  { requireAuth = false } = {}
+) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!url) return;
-
     const controller = new AbortController();
 
-    const obtenerDatos = async () => {
+    async function fetchData() {
+      setLoading(true);
+      setError(null);
+
       try {
-        setLoading(true);
-        const res = await fetch(url, { signal: controller.signal });
-        if (!res.ok) throw new Error("Error en la petición");
+        const token = getToken();
+
+        const headers = {
+          ...(options.headers || {}),
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        };
+
+        const res = await fetch(url, {
+          ...options,
+          headers,
+          signal: controller.signal
+        });
+
+        if (res.status === 401 && requireAuth) {
+          clearToken();
+          navigate("/login");
+          return;
+        }
+
+        if (!res.ok) throw new Error(res.statusText);
+
         const json = await res.json();
         setData(json);
       } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message);
-        }
+        if (err.name !== "AbortError") setError(err);
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    obtenerDatos();
+    fetchData();
     return () => controller.abort();
   }, [url]);
 

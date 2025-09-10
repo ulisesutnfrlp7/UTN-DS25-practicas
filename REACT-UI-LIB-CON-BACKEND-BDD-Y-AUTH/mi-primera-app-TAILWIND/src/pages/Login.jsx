@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../context/UsuarioContext";
+import { setToken } from "../helpers/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,32 +21,35 @@ const Login = () => {
     setFormulario((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const validEmail = "admin@libreria.com";
-    const validPassword = "12345678";
-
-    if (
-      formulario.email === validEmail &&
-      formulario.password === validPassword
-    ) {
-      setUsuario({
-        nombre: "Admin",
-        apellido: "Librería",
-        email: validEmail,
-        role: "ADMIN",
-        registrado: true
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formulario)
       });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Error en login");
+      }
+
+      const { data } = await res.json();
+      const { user, token } = data;
+
+      setToken(token);
+      setUsuario({ ...user, registrado: true });
       navigate("/home");
-    } else {
-      setError("CREDENCIALES INVÁLIDAS");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
     <section className="flex flex-col justify-center items-center w-full min-h-screen bg-gradient-to-r from-blue-200 to-indigo-400">
-      {/* Mensaje arriba con más separación */}
       <h1 className="text-5xl font-[Impact] text-brown drop-shadow-md mb-16">
         ¡BIENVENIDO!
       </h1>
