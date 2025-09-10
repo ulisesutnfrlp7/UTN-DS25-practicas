@@ -15,9 +15,9 @@ export interface LoginResponse {
       nombre: string;
       apellido: string;
       email: string;
-      role: 'USER' | 'ADMIN';
       sexo?: string;
       temaFavorito?: string;
+      role: 'USER' | 'ADMIN';
       createdAt?: Date;
     };
     token: string;

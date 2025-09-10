@@ -11,6 +11,7 @@ export interface CreateUserRequest {
   contraseña: string;
   sexo: 'masculino' | 'femenino';
   temaFavorito: 'Novela' | 'Terror' | 'Ciencia Ficción' | 'Policial';
+  role?: 'USER' | 'ADMIN';
 }
 
 export interface UserResponse {
