@@ -1,3 +1,5 @@
+// src/api/api.js
+
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 console.log("🌐 BASE_URL:", BASE_URL);
@@ -61,10 +63,13 @@ export async function updateBook(bookData) {
 }
 
 // Usuarios
-export async function createUser(userData) {
+export async function createUser(userData, token) {
   const res = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
     body: JSON.stringify(userData)
   });
   if (!res.ok) throw new Error('Error al registrar usuario');

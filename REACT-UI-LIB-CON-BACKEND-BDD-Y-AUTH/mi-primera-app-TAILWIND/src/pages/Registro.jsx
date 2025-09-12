@@ -4,6 +4,7 @@ import { useUsuario } from "../context/UsuarioContext";
 import { useForm } from "../hooks/useForm";
 import { useConfirmacion } from "../hooks/useConfirmacion";
 import { createUser } from "../api/api";
+import { getToken } from "../helpers/auth"
 
 const Registro = () => {
   const { setUsuario } = useUsuario();
@@ -15,6 +16,8 @@ const Registro = () => {
     if (data.apellido.trim() === "") errores.push("El apellido es obligatorio.");
     if (data.email.trim() === "") errores.push("El email es obligatorio.");
     if (data.contraseña.length < 8) errores.push("La contraseña debe tener al menos 8 caracteres.");
+    if (!/[A-Z]/.test(data.contraseña)) errores.push("La contraseña debe contener al menos una letra mayúscula.");
+    if (!/[0-9]/.test(data.contraseña)) errores.push("La contraseña debe contener al menos un número.");
     if (data.sexo === "") errores.push("Debes seleccionar un sexo.");
     if (data.temaFavorito === "") errores.push("Debes seleccionar un tema favorito.");
     return errores;
@@ -41,7 +44,17 @@ const Registro = () => {
     e.preventDefault();
     if (validar()) {
       try {
-        const data = await createUser(formulario);
+        const token = getToken();
+        const payload = {
+          nombre: formulario.nombre,
+          apellido: formulario.apellido,
+          email: formulario.email,
+          password: formulario.contraseña,
+          sexo: formulario.sexo === "masculino" ? "Masculino" : "Femenino",
+          temaFavorito: formulario.temaFavorito
+        };
+        const data = await createUser(payload, token);
+        console.log("Token usado para crear usuario:", token);
         setUsuario({ ...data.user });
         mostrarConfirmacion();
       } catch (error) {

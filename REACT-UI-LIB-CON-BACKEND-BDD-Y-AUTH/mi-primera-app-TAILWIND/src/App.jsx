@@ -12,62 +12,68 @@ import Login from './pages/Login';
 import { UsuarioProvider } from './context/UsuarioContext';
 
 function App() {
-    return (
+  return (
     <UsuarioProvider>
-        <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Login />} />
+      <Router>
+        <Routes>
+          {/* 🔓 Ruta pública sin Layout */}
+          <Route path="/" element={<Login />} />
 
-                    <Route 
-                        path="/home" 
-                        element={
-                            <RutaProtegida>
-                                <Contenido />
-                            </RutaProtegida>
-                        }
-                    />
-
-                    <Route 
-                        path="/registro" 
-                        element={
-                            <RutaProtegida>
-                                <Registro />
-                            </RutaProtegida>
-                        }
-                    />
-
-                    <Route 
-                        path="/contacto" 
-                        element={
-                            <RutaProtegida>
-                                <Contacto />
-                            </RutaProtegida>
-                        }
-                    />
-
-                    <Route 
-                        path="/:categoria" 
-                        element={
-                            <RutaProtegida>
-                                <SeccionLibros />
-                            </RutaProtegida>
-                        }
-                    />
-
-                    <Route 
-                        path="/catalogo" 
-                        element={
-                            <RutaProtegida>
-                                <Catalogo />
-                            </RutaProtegida>
-                        }
-                    />
-                </Routes>
-            </Layout>
-        </Router>
+          {/* 🔐 Rutas protegidas con Layout */}
+          <Route
+            path="/home"
+            element={
+              <RutaProtegida>
+                <Layout>
+                  <Contenido />
+                </Layout>
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/registro"
+            element={
+              <RutaProtegida>
+                <Layout>
+                  <Registro />
+                </Layout>
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/contacto"
+            element={
+              <RutaProtegida>
+                <Layout>
+                  <Contacto />
+                </Layout>
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/:categoria"
+            element={
+              <RutaProtegida>
+                <Layout>
+                  <SeccionLibros />
+                </Layout>
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/catalogo"
+            element={
+              <RutaProtegida>
+                <Layout>
+                  <Catalogo />
+                </Layout>
+              </RutaProtegida>
+            }
+          />
+        </Routes>
+      </Router>
     </UsuarioProvider>
-    );
+  );
 }
 
 export default App;

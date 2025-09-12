@@ -32,13 +32,13 @@ const Login = () => {
         body: JSON.stringify(formulario)
       });
 
+      const json = await res.json();
+
       if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error || "Error en login");
+        throw new Error(json.error || "Error en login");
       }
 
-      const { data } = await res.json();
-      const { user, token } = data;
+      const { user, token } = json.data;
 
       setToken(token);
       setUsuario({ ...user, registrado: true });
