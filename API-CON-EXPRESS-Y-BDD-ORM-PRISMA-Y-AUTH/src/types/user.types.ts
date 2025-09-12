@@ -2,24 +2,24 @@
 
 import { User as PrismaUser } from '@prisma/client';
 
-export type User = PrismaUser & { registrado: boolean };
+export type PublicUser = Omit<PrismaUser, 'password'> & { registrado: boolean };
 
 export interface CreateUserRequest {
   nombre: string;
   apellido: string;
   email: string;
-  contraseña: string;
-  sexo: 'masculino' | 'femenino';
+  password: string;
+  sexo: 'Masculino' | 'Femenino';
   temaFavorito: 'Novela' | 'Terror' | 'Ciencia Ficción' | 'Policial';
   role?: 'USER' | 'ADMIN';
 }
 
 export interface UserResponse {
-  user: User;
+  user: PublicUser;
   message: string;
 }
 
 export interface UsersListResponse {
-  users: User[];
+  users: PublicUser[];
   total: number;
 }

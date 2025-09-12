@@ -10,6 +10,7 @@ export async function createUser(
   next: NextFunction
 ) {
   try {
+    console.log('📦 Payload recibido:', req.body);
     const newUser = await userService.createUser(req.body);
     res.status(201).json({
       user: newUser,

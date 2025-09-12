@@ -2,8 +2,8 @@
 
 import { PrismaClient }  from '@prisma/client';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { LoginRequest, LoginResponse } from '../types/auth.types';
+import { generateToken } from '../utils/jwt';
 
 const prisma = new PrismaClient();
 
@@ -29,14 +29,12 @@ export async function login(data: LoginRequest): Promise<LoginResponse['data']> 
   }
 
   // 3. Generar token JWT
-  const token = jwt.sign(
+  const token = generateToken(
     {
       id: user.id,
       email: user.email,
       role: user.role
-    },
-    process.env.JWT_SECRET!,
-    { expiresIn: process.env.JWT_EXPIRES_IN }
+    }
   );
 
   // 4. Retornar usuario sin contraseña
