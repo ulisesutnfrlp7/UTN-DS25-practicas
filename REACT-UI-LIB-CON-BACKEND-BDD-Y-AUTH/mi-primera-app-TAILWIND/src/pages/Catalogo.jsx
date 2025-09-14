@@ -6,6 +6,8 @@ import FormularioEditarLibro from '../components/FormularioEditarLibro';
 import ListaLibros from '../components/ListaLibros';
 import ReseñasDestacadas from '../components/ReseñasDestacadas';
 import { getBooks, deleteBook, updateBook } from '../api/api';
+import { useUsuario } from '../context/UsuarioContext';
+import { getToken } from '../helpers/auth';
 
 const Catalogo = () => {
   const [catalogo, setCatalogo] = useState([]);
@@ -13,6 +15,8 @@ const Catalogo = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const { usuario } = useUsuario();
+  const [errorPermiso, setErrorPermiso] = useState(""); 
 
   useEffect(() => {
     cargarCatalogo();
@@ -31,8 +35,16 @@ const Catalogo = () => {
   };
 
   const handleDelete = async (id) => {
+
+    const token = getToken();
+
+    if (usuario.role !== "ADMIN") {
+      setErrorPermiso("NO TENÉS PERMISO PARA ELIMINAR LIBROS");
+      return;
+    }
+
     try {
-      await deleteBook(id);
+      await deleteBook(id, token);
       setCatalogo(prev => prev.filter(libro => libro.id !== id));
       setMensaje("✅ ¡LIBRO ELIMINADO CON ÉXITO!");
       setTimeout(() => setMensaje(""), 2000);
@@ -49,7 +61,8 @@ const Catalogo = () => {
 
   const handleUpdate = async (libroActualizado) => {
     try {
-      const { book: libroFinal } = await updateBook(libroActualizado);
+      const token = getToken();
+      const { book: libroFinal } = await updateBook(libroActualizado, token);
       setCatalogo(prev =>
         prev.map(libro =>
           libro.id === libroFinal.id ? libroFinal : libro
@@ -81,6 +94,12 @@ const Catalogo = () => {
         <div className="mt-4 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity duration-500">
           {mensaje}
         </div>
+      )}
+
+      {errorPermiso && (
+        <p className="mt-8 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity">
+          ⚠️ {errorPermiso}
+        </p>
       )}
 
       {loading ? (

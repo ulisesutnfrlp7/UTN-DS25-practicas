@@ -11,10 +11,13 @@ export async function getAuthors() {
   return res.json();
 }
 
-export async function createAuthor(name) {
+export async function createAuthor(name, token) {
   const res = await fetch(`${BASE_URL}/authors`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
     body: JSON.stringify({ name }),
   });
   if (!res.ok) throw new Error('Error creando autor');
@@ -34,28 +37,38 @@ export async function getBooksByCategory(categoria) {
   return res.json();
 }
 
-export async function createBook(bookData) {
+export async function createBook(bookData, token) {
   const res = await fetch(`${BASE_URL}/books`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
     body: JSON.stringify(bookData)
   });
   if (!res.ok) throw new Error('Error al crear libro');
   return res.json();
 }
 
-export async function deleteBook(id) {
+export async function deleteBook(id, token) {
   const res = await fetch(`${BASE_URL}/books/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
   });
   if (!res.ok) throw new Error('Error al eliminar libro');
   return res.json();
 }
 
-export async function updateBook(bookData) {
+export async function updateBook(bookData, token) {
   const res = await fetch(`${BASE_URL}/books/${bookData.id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
     body: JSON.stringify(bookData)
   });
   if (!res.ok) throw new Error('Error al actualizar libro');

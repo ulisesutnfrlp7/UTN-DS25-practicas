@@ -28,7 +28,8 @@ const Contacto = () => {
       nombre: "",
       apellido: "",
       email: "",
-      mensaje: ""
+      mensaje: "",
+      userId: "",
     },
     validarCampos
   );
@@ -37,7 +38,11 @@ const Contacto = () => {
     e.preventDefault();
     if (validar()) {
       try {
-        const data = await sendMessage(formulario);
+        const payload = {
+          ...formulario,
+          userId: usuario.id,
+        };
+        const data = await sendMessage(payload);
         console.log("✅ Mensaje enviado:", data);
         mostrarConfirmacion();
       } catch (error) {

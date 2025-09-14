@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { getAuthors, createAuthor } from "../api/api";
 import { supabase } from "../api/supabaseClient";
+import { useUsuario } from "../context/UsuarioContext";
+import { getToken } from "../helpers/auth";
 
 const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
   const [datos, setDatos] = useState({
@@ -17,6 +19,8 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
   const [nuevoAutor, setNuevoAutor] = useState("");
   const [archivoImagen, setArchivoImagen] = useState(null);
   const [loadingAutor, setLoadingAutor] = useState(false);
+  const{ usuario } = useUsuario();
+  const [errorPermiso, setErrorPermiso] = useState("");
 
   useEffect(() => {
     const cargarAutores = async () => {
@@ -71,7 +75,8 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
     if (!nuevoAutor.trim()) return;
     setLoadingAutor(true);
     try {
-      await createAuthor(nuevoAutor.trim());
+      const token = getToken();
+      await createAuthor(nuevoAutor.trim(), token);
       setNuevoAutor("");
       const res = await getAuthors();
       setAutores(res.authors || []);
@@ -82,7 +87,16 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = getToken();
+
+    if (usuario.role !== "ADMIN") {
+      setErrorPermiso("NO TENÉS PERMISO PARA MODIFICAR LIBROS");
+      return;
+    }
+
     const { titulo, sinopsis, imagen, categoria, authorId } = datos;
+
     if (!titulo || !sinopsis || !imagen || !categoria || !authorId) return;
 
     try {
@@ -95,7 +109,7 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
         image: urlFinal,
         categoria,
         authorId: Number(authorId),
-      });
+      }, token);
     } catch (error) {
       console.error("❌ Error al modificar libro:", error.message);
     }
@@ -150,7 +164,7 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
                 type="text"
                 value={nuevoAutor}
                 onChange={(e) => setNuevoAutor(e.target.value)}
-                placeholder="Nombre del nuevo autor"
+                placeholder="NOMBRE DEL NUEVO AUTOR..."
                 className="flex-1 px-4 py-2 border-2 border-black rounded-md"
               />
               <button
@@ -233,6 +247,12 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
           </button>
         </div>
       </form>
+
+      {errorPermiso && (
+        <p className="mt-8 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity">
+          ⚠️ {errorPermiso}
+        </p>
+      )}
     </>
   );
 };

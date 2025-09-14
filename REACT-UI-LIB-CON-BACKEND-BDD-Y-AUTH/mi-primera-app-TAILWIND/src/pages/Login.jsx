@@ -35,12 +35,16 @@ const Login = () => {
       const json = await res.json();
 
       if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          throw new Error("CREDENCIALES INVÁLIDAS");
+        }
         throw new Error(json.error || "Error en login");
       }
 
       const { user, token } = json.data;
 
       setToken(token);
+      console.log("🧠 Usuario recibido en login:", user);
       setUsuario({ ...user, registrado: true });
       navigate("/home");
     } catch (err) {
@@ -51,7 +55,7 @@ const Login = () => {
   return (
     <section className="flex flex-col justify-center items-center w-full min-h-screen bg-gradient-to-r from-blue-200 to-indigo-400">
       <h1 className="text-5xl font-[Impact] text-brown drop-shadow-md mb-16">
-        ¡BIENVENIDO!
+        ¡BIENVENIDO! - LIBRERÍA YENNY
       </h1>
 
       <form
@@ -74,7 +78,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
-              placeholder="admin@libreria.com"
+              placeholder="ulibucchino@gmail.com"
               value={formulario.email}
               onChange={handleChange}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"
@@ -88,7 +92,7 @@ const Login = () => {
             <input
               type="password"
               name="password"
-              placeholder="********"
+              placeholder="admin123"
               value={formulario.password}
               onChange={handleChange}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"

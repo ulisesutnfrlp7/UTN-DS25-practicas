@@ -8,6 +8,7 @@ export function UsuarioProvider({ children }) {
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
+    role: "",
     temaFavorito: "",
     registrado: false
   });

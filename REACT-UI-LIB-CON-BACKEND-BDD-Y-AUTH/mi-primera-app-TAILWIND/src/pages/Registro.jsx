@@ -4,11 +4,13 @@ import { useUsuario } from "../context/UsuarioContext";
 import { useForm } from "../hooks/useForm";
 import { useConfirmacion } from "../hooks/useConfirmacion";
 import { createUser } from "../api/api";
-import { getToken } from "../helpers/auth"
+import { getToken } from "../helpers/auth";
+import { useState } from "react";
 
 const Registro = () => {
-  const { setUsuario } = useUsuario();
+  const { usuario, setUsuario } = useUsuario();
   const { visible: confirmacion, activar: mostrarConfirmacion } = useConfirmacion();
+  const [errorPermiso, setErrorPermiso] = useState("");
 
   const validarCampos = (data) => {
     const errores = [];
@@ -42,6 +44,12 @@ const Registro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (usuario.role !== "ADMIN") {
+      setErrorPermiso("NO TENÉS PERMISO PARA CREAR USUARIOS");
+      return;
+    }
+
     if (validar()) {
       try {
         const token = getToken();
@@ -55,7 +63,6 @@ const Registro = () => {
         };
         const data = await createUser(payload, token);
         console.log("Token usado para crear usuario:", token);
-        setUsuario({ ...data.user });
         mostrarConfirmacion();
       } catch (error) {
         console.error("❌ Error en el registro:", error.message);
@@ -190,6 +197,12 @@ const Registro = () => {
         {confirmacion && (
           <p className="text-[18px] text-green-700 bg-green-100 rounded-md py-2 px-4 mt-4 shadow-md font-mono transition-opacity duration-500">
             ✅ FORMULARIO ENVIADO CON ÉXITO
+          </p>
+        )}
+
+        {errorPermiso && (
+          <p className="bg-red-100 text-red-800 rounded-md py-3 px-6 text-[18px] font-mono shadow-md">
+            ⚠️ {errorPermiso}
           </p>
         )}
       </form>

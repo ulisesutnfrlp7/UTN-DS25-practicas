@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { createBook, getAuthors, createAuthor } from "../api/api";
 import { supabase } from '../api/supabaseClient';
+import { useUsuario } from "../context/UsuarioContext";
+import { getToken } from "../helpers/auth";
 
 const FormularioLibro = ({ onLibroAgregado }) => {
   const [datos, setDatos] = useState({
@@ -18,6 +20,8 @@ const FormularioLibro = ({ onLibroAgregado }) => {
   const [autores, setAutores] = useState([]);
   const [nuevoAutor, setNuevoAutor] = useState("");
   const [loadingAutor, setLoadingAutor] = useState(false);
+  const { usuario } = useUsuario();
+  const [errorPermiso, setErrorPermiso] = useState("");
 
   const cargarAutores = async () => {
     const res = await getAuthors();
@@ -41,10 +45,15 @@ const FormularioLibro = ({ onLibroAgregado }) => {
   };
 
   const agregarAutor = async () => {
+    if (usuario.role !== "ADMIN") {
+      setErrorPermiso("NO TENÉS PERMISO PARA AGREGAR AUTORES");
+      return;
+    }
     if (!nuevoAutor.trim()) return;
     setLoadingAutor(true);
     try {
-      await createAuthor(nuevoAutor.trim());
+      const token = getToken();
+      await createAuthor(nuevoAutor.trim(), token);
       setNuevoAutor("");
       await cargarAutores();
     } finally {
@@ -54,9 +63,18 @@ const FormularioLibro = ({ onLibroAgregado }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (usuario.role !== "ADMIN") {
+      setErrorPermiso("NO TENÉS PERMISO PARA AGREGAR LIBROS");
+      return;
+    }
+
     if (!datos.titulo || !datos.sinopsis || !archivoImagen || !datos.categoria || !datos.authorId) return;
 
     try {
+
+      const token = getToken();
+
       // Subir imagen a Supabase
       const nombreArchivo = `${Date.now()}_${archivoImagen.name}`;
       const { error } = await supabase.storage
@@ -78,7 +96,7 @@ const FormularioLibro = ({ onLibroAgregado }) => {
         image: urlPublica,
         categoria: datos.categoria,
         authorId: Number(datos.authorId),
-      });
+      }, token);
 
       setDatos({ titulo: "", sinopsis: "", imagen: "", categoria: "", authorId: "" });
       setArchivoImagen(null);
@@ -199,6 +217,12 @@ const FormularioLibro = ({ onLibroAgregado }) => {
         <div className="mt-8 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity duration-500">
           {mensaje}
         </div>
+      )}
+
+      {errorPermiso && (
+        <p className="mt-8 text-center text-[20px] font-[Impact] text-green-700 bg-green-100 rounded-md py-3 px-5 max-w-lg mx-auto shadow-md transition-opacity">
+          ⚠️ {errorPermiso}
+        </p>
       )}
     </>
   );
