@@ -26,6 +26,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
 
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    console.log("🔍 Decoded JWT:", decoded);
 
     req.user = {
       id: decoded.id,

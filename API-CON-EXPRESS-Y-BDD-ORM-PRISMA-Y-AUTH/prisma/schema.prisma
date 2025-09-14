@@ -37,6 +37,8 @@ model ContactMessage {
   apellido  String
   email     String
   mensaje   String
+  userId    Int
+  user         User @relation(fields: [userId], references: [id])
   enviadoEn DateTime @default(now())
 }
 
@@ -49,6 +51,7 @@ model User {
   role         Role    @default(USER)
   sexo         String
   temaFavorito String
+  messages     ContactMessage[]
   createdAt    DateTime @default(now())
 }
 
