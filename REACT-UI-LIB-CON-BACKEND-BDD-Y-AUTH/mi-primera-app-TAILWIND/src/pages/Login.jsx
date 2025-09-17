@@ -78,7 +78,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
-              placeholder="ulibucchino@gmail.com"
+              placeholder="ADMIN: ulibucchino@gmail.com - USUARIO COMÚN: dbucchino@gmail.com"
               value={formulario.email}
               onChange={handleChange}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"
@@ -92,7 +92,7 @@ const Login = () => {
             <input
               type="password"
               name="password"
-              placeholder="admin123"
+              placeholder="ADMIN: admin123 - USUARIO COMÚN: 6568DaLi"
               value={formulario.password}
               onChange={handleChange}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"
