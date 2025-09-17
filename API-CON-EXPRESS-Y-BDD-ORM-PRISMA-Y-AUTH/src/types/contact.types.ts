@@ -5,6 +5,7 @@ export interface ContactMessageRequest {
     apellido: string;
     email: string;
     mensaje: string;
+    userId: number;
 }
 
 export interface ContactMessage extends ContactMessageRequest {

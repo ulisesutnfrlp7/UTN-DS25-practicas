@@ -1,27 +1,61 @@
-# Node modules
+# 📦 Node modules
 node_modules/
 
-# Compilados de TypeScript
+# 🏗️ Build outputs
 dist/
+build/
+.vite/
 
-# Logs
+# 🧪 Test coverage
+coverage/
+
+# 🧾 Logs
 logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Archivos temporales de sistema operativo / editor
-.DS_Store
-Thumbs.db
-*.swp
-
-# Configuración de entorno (no se comparte)
-.env
-
-# Archivos de desarrollo opcionales
-*.local.*
+# ⚙️ TypeScript
 *.tsbuildinfo
 
-# IDEs
+# 🌎 Environment variables
+.env
+.env.local
+.env.*.local
+
+# 🧠 IDEs and editors
 .vscode/
 .idea/
-/src/generated/prisma
+*.swp
+*.sublime-workspace
+*.sublime-project
+
+# 🖼️ OS-specific files
+.DS_Store
+Thumbs.db
+
+# 🧬 Prisma
+prisma/migrations/
+prisma/dev.db
+src/generated/prisma/
+
+# 🧰 Supabase CLI
+supabase/.temp/
+supabase/migrations/
+supabase/config.toml
+supabase/docker/
+
+# 🐳 Docker
+*.db
+docker-compose.override.yml
+Dockerfile.local
+.dockerignore
+
+# 📸 Image previews or uploads
+uploads/
+public/images/tmp/
+
+# 🧼 Cache folders
+.cache/
+.tmp/
