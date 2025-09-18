@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  Novela
+  Terror
+  CienciaFiccion
+  Policial
+}
+
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String
+  books Book[]
+}
+
+model Book {
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String
+  image          String
+  categoria      Category
+  authorId       Int
+  author         Author @relation(fields: [authorId], references: [id])
+  createdAt      DateTime @default(now())
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  email     String
+  mensaje   String
+  userId    Int
+  user         User @relation(fields: [userId], references: [id])
+  enviadoEn DateTime @default(now())
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  nombre       String
+  apellido     String
+  email        String   @unique
+  password     String
+  role         Role    @default(USER)
+  sexo         String
+  temaFavorito String
+  messages     ContactMessage[]
+  createdAt    DateTime @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
