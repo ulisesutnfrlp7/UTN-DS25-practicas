@@ -1,5 +1,8 @@
 // src/components/FormularioEditarLibro.jsx
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { libroSchema } from "../validations/libroSchema";
 import { useState, useEffect } from "react";
 import { getAuthors, createAuthor } from "../api/api";
 import { supabase } from "../api/supabaseClient";
@@ -7,20 +10,22 @@ import { useUsuario } from "../context/UsuarioContext";
 import { getToken } from "../helpers/auth";
 
 const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
-  const [datos, setDatos] = useState({
-    titulo: "",
-    sinopsis: "",
-    imagen: "",
-    categoria: "",
-    authorId: "",
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(libroSchema),
+    defaultValues: {
+      titulo: libro?.title || "",
+      sinopsis: libro?.description || "",
+      categoria: libro?.categoria || "",
+      authorId: libro?.authorId?.toString() || "",
+    },
   });
 
+  const [archivoImagen, setArchivoImagen] = useState(null);
   const [autores, setAutores] = useState([]);
   const [nuevoAutor, setNuevoAutor] = useState("");
-  const [archivoImagen, setArchivoImagen] = useState(null);
   const [loadingAutor, setLoadingAutor] = useState(false);
-  const{ usuario } = useUsuario();
   const [errorPermiso, setErrorPermiso] = useState("");
+  const { usuario } = useUsuario();
 
   useEffect(() => {
     const cargarAutores = async () => {
@@ -32,32 +37,24 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
 
   useEffect(() => {
     if (libro) {
-      setDatos({
+      reset({
         titulo: libro.title || "",
         sinopsis: libro.description || "",
-        imagen: libro.image || "",
         categoria: libro.categoria || "",
-        authorId: libro.authorId || "",
+        authorId: libro.authorId?.toString() || "",
       });
     }
-  }, [libro]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDatos((prev) => ({ ...prev, [name]: value }));
-  };
+  }, [libro, reset]);
 
   const handleImage = (e) => {
     const archivo = e.target.files[0];
     if (archivo) {
       setArchivoImagen(archivo);
-      const urlTemporal = URL.createObjectURL(archivo);
-      setDatos((prev) => ({ ...prev, imagen: urlTemporal }));
     }
   };
 
   const subirImagenSiExiste = async () => {
-    if (!archivoImagen) return datos.imagen;
+    if (!archivoImagen) return libro.image;
 
     const nombreArchivo = `${Date.now()}_${archivoImagen.name}`;
     const { error } = await supabase.storage
@@ -85,30 +82,23 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const token = getToken();
-
+  const onSubmit = async (datos) => {
     if (usuario.role !== "ADMIN") {
       setErrorPermiso("NO TENÉS PERMISO PARA MODIFICAR LIBROS");
       return;
     }
 
-    const { titulo, sinopsis, imagen, categoria, authorId } = datos;
-
-    if (!titulo || !sinopsis || !imagen || !categoria || !authorId) return;
-
     try {
+      const token = getToken();
       const urlFinal = await subirImagenSiExiste();
 
       await onUpdate({
         id: libro.id,
-        title: titulo,
-        description: sinopsis,
+        title: datos.titulo,
+        description: datos.sinopsis,
         image: urlFinal,
-        categoria,
-        authorId: Number(authorId),
+        categoria: datos.categoria,
+        authorId: Number(datos.authorId),
       }, token);
     } catch (error) {
       console.error("❌ Error al modificar libro:", error.message);
@@ -117,48 +107,38 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-2xl px-6 py-10 space-y-10 text-center"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl px-6 py-10 space-y-10 text-center">
         <h2 className="text-4xl font-[Impact] text-center">EDITAR LIBRO</h2>
 
+        {/* Título */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Título
           <input
-            type="text"
-            name="titulo"
-            value={datos.titulo}
-            onChange={handleChange}
+            {...register("titulo")}
             placeholder="EJ. HARRY POTTER Y LA PIEDRA FILOSOFAL"
             className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
           />
+          {errors.titulo && <p className="text-red-600 text-sm mt-1">{errors.titulo.message}</p>}
         </label>
 
+        {/* Autor */}
         <div className="grid grid-cols-1 gap-3">
           <label className="block text-[24px] font-[Impact] text-brown">
             Autor
             <select
-              name="authorId"
-              value={datos.authorId}
-              onChange={handleChange}
+              {...register("authorId")}
               className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
             >
-              <option value="" disabled>
-                SELECCIONE UN AUTOR
-              </option>
+              <option value="" disabled>SELECCIONE UN AUTOR</option>
               {autores.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.name}
-                </option>
+                <option key={a.id} value={a.id}>{a.name}</option>
               ))}
             </select>
+            {errors.authorId && <p className="text-red-600 text-sm mt-1">{errors.authorId.message}</p>}
           </label>
 
           <div className="text-left">
-            <p className="text-[16px] font-[Impact] text-brown mb-2">
-              ¿NO ESTÁ EL AUTOR?
-            </p>
+            <p className="text-[16px] font-[Impact] text-brown mb-2">¿NO ESTÁ EL AUTOR?</p>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -179,35 +159,34 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
           </div>
         </div>
 
+        {/* Sinopsis */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Sinopsis
           <textarea
-            name="sinopsis"
-            value={datos.sinopsis}
-            onChange={handleChange}
+            {...register("sinopsis")}
             placeholder="BREVE DESCRIPCIÓN DEL LIBRO..."
             className="mt-2 w-full h-32 px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md resize-none"
           />
+          {errors.sinopsis && <p className="text-red-600 text-sm mt-1">{errors.sinopsis.message}</p>}
         </label>
 
+        {/* Categoría */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Categoría o Género Principal
           <select
-            name="categoria"
-            value={datos.categoria}
-            onChange={handleChange}
+            {...register("categoria")}
             className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
           >
-            <option value="" disabled>
-              SELECCIONE UNA OPCIÓN
-            </option>
+            <option value="" disabled>SELECCIONE UNA OPCIÓN</option>
             <option value="Novela">Novela</option>
             <option value="Terror">Terror</option>
             <option value="CienciaFiccion">Ciencia Ficción</option>
             <option value="Policial">Policial</option>
           </select>
+          {errors.categoria && <p className="text-red-600 text-sm mt-1">{errors.categoria.message}</p>}
         </label>
 
+        {/* Imagen */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Imagen
           <input
@@ -218,13 +197,11 @@ const FormularioEditarLibro = ({ libro, onUpdate, onCancelar }) => {
           />
         </label>
 
-        {datos.imagen && !archivoImagen && (
+        {libro.image && !archivoImagen && (
           <div className="mt-4">
-            <p className="text-[16px] font-[Impact] text-brown mb-2">
-              IMAGEN ACTUAL:
-            </p>
+            <p className="text-[16px] font-[Impact] text-brown mb-2">IMAGEN ACTUAL:</p>
             <img
-              src={datos.imagen}
+              src={libro.image}
               alt="Vista previa"
               className="max-w-xs mx-auto border-2 border-black rounded-md"
             />

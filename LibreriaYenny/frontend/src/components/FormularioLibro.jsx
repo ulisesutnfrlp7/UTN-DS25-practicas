@@ -1,46 +1,39 @@
 // src/components/FormularioLibro.jsx
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { libroSchema } from "../validations/libroSchema";
 import { useState, useEffect } from "react";
 import { createBook, getAuthors, createAuthor } from "../api/api";
-import { supabase } from '../api/supabaseClient';
+import { supabase } from "../api/supabaseClient";
 import { useUsuario } from "../context/UsuarioContext";
 import { getToken } from "../helpers/auth";
 
 const FormularioLibro = ({ onLibroAgregado }) => {
-  const [datos, setDatos] = useState({
-    titulo: "",
-    sinopsis: "",
-    imagen: "",
-    categoria: "",
-    authorId: "",
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(libroSchema),
   });
 
-  const [mensaje, setMensaje] = useState("");
   const [archivoImagen, setArchivoImagen] = useState(null);
   const [autores, setAutores] = useState([]);
   const [nuevoAutor, setNuevoAutor] = useState("");
   const [loadingAutor, setLoadingAutor] = useState(false);
-  const { usuario } = useUsuario();
+  const [mensaje, setMensaje] = useState("");
   const [errorPermiso, setErrorPermiso] = useState("");
+  const { usuario } = useUsuario();
 
-  const cargarAutores = async () => {
-    const res = await getAuthors();
-    setAutores(res.authors || []);
-  };
-
-  useEffect(() => { cargarAutores(); }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDatos((prev) => ({ ...prev, [name]: value }));
-  };
+  useEffect(() => {
+    const cargarAutores = async () => {
+      const res = await getAuthors();
+      setAutores(res.authors || []);
+    };
+    cargarAutores();
+  }, []);
 
   const handleImage = (e) => {
     const archivo = e.target.files[0];
     if (archivo) {
       setArchivoImagen(archivo);
-      const urlTemporal = URL.createObjectURL(archivo);
-      setDatos((prev) => ({ ...prev, imagen: urlTemporal }));
     }
   };
 
@@ -55,41 +48,37 @@ const FormularioLibro = ({ onLibroAgregado }) => {
       const token = getToken();
       await createAuthor(nuevoAutor.trim(), token);
       setNuevoAutor("");
-      await cargarAutores();
+      const res = await getAuthors();
+      setAutores(res.authors || []);
     } finally {
       setLoadingAutor(false);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (datos) => {
     if (usuario.role !== "ADMIN") {
       setErrorPermiso("NO TENÉS PERMISO PARA AGREGAR LIBROS");
       return;
     }
 
-    if (!datos.titulo || !datos.sinopsis || !archivoImagen || !datos.categoria || !datos.authorId) return;
+    if (!archivoImagen) {
+      setMensaje("❌ IMAGEN REQUERIDA");
+      return;
+    }
 
     try {
-
       const token = getToken();
-
-      // Subir imagen a Supabase
       const nombreArchivo = `${Date.now()}_${archivoImagen.name}`;
       const { error } = await supabase.storage
-        .from('libros')
+        .from("libros")
         .upload(nombreArchivo, archivoImagen);
 
       if (error) throw error;
 
       const urlPublica = supabase.storage
-        .from('libros')
+        .from("libros")
         .getPublicUrl(nombreArchivo).data.publicUrl;
-      
-      console.log("📷 URL pública de imagen:", urlPublica);
 
-      // Crear libro
       await createBook({
         title: datos.titulo,
         description: datos.sinopsis,
@@ -98,7 +87,7 @@ const FormularioLibro = ({ onLibroAgregado }) => {
         authorId: Number(datos.authorId),
       }, token);
 
-      setDatos({ titulo: "", sinopsis: "", imagen: "", categoria: "", authorId: "" });
+      reset();
       setArchivoImagen(null);
       setMensaje("✅ ¡LIBRO AGREGADO CON ÉXITO!");
       onLibroAgregado?.();
@@ -113,37 +102,40 @@ const FormularioLibro = ({ onLibroAgregado }) => {
   return (
     <>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-2xl px-6 py-10 space-y-10 text-center"
       >
         <h2 className="text-4xl font-[Impact] text-center">
           AGREGAR NUEVO LIBRO
         </h2>
 
+        {/* Título */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Título
           <input
-            type="text"
-            name="titulo"
-            value={datos.titulo}
-            onChange={handleChange}
+            {...register("titulo")}
             placeholder="EJ. HARRY POTTER Y LA PIEDRA FILOSOFAL"
             className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
           />
+          {errors.titulo && (
+            <p className="text-red-600 text-sm mt-1">{errors.titulo.message}</p>
+          )}
         </label>
 
+        {/* Autor */}
         <div className="grid grid-cols-1 gap-3">
           <label className="block text-[24px] font-[Impact] text-brown">
             Autor
             <select
-              name="authorId"
-              value={datos.authorId}
-              onChange={handleChange}
+              {...register("authorId")}
               className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
             >
               <option value="" disabled>SELECCIONE UN AUTOR</option>
               {autores.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
             </select>
+            {errors.authorId && (
+              <p className="text-red-600 text-sm mt-1">{errors.authorId.message}</p>
+            )}
           </label>
 
           <div className="text-left">
@@ -168,23 +160,24 @@ const FormularioLibro = ({ onLibroAgregado }) => {
           </div>
         </div>
 
+        {/* Sinopsis */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Sinopsis
           <textarea
-            name="sinopsis"
-            value={datos.sinopsis}
-            onChange={handleChange}
+            {...register("sinopsis")}
             placeholder="BREVE DESCRIPCIÓN DEL LIBRO..."
             className="mt-2 w-full h-32 px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md resize-none"
           />
+          {errors.sinopsis && (
+            <p className="text-red-600 text-sm mt-1">{errors.sinopsis.message}</p>
+          )}
         </label>
 
+        {/* Categoría */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Categoría o Género Principal
           <select
-            name="categoria"
-            value={datos.categoria}
-            onChange={handleChange}
+            {...register("categoria")}
             className="mt-2 w-full px-5 py-3 text-[18px] font-mono border-2 border-black rounded-md"
           >
             <option value="" disabled>SELECCIONE UNA OPCIÓN</option>
@@ -193,8 +186,12 @@ const FormularioLibro = ({ onLibroAgregado }) => {
             <option value="CienciaFiccion">Ciencia Ficción</option>
             <option value="Policial">Policial</option>
           </select>
+          {errors.categoria && (
+            <p className="text-red-600 text-sm mt-1">{errors.categoria.message}</p>
+          )}
         </label>
 
+        {/* Imagen */}
         <label className="block text-[24px] font-[Impact] text-brown">
           Imagen
           <input
