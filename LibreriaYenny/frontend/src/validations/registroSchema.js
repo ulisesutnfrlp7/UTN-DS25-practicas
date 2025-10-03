@@ -1,3 +1,5 @@
+// src/validations/registroSchema.js
+
 import * as yup from "yup";
 
 export const registroSchema = yup.object().shape({

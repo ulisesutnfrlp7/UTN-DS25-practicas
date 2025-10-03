@@ -1,3 +1,5 @@
+// src/validations/contactoSchema.js
+
 import * as yup from "yup";
 
 export const contactoSchema = yup.object().shape({
