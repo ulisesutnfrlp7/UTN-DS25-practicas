@@ -1,5 +1,8 @@
 // src/pages/Login.jsx
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../validations/loginSchema";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../context/UsuarioContext";
@@ -8,28 +11,28 @@ import { setToken } from "../helpers/auth";
 const Login = () => {
   const navigate = useNavigate();
   const { setUsuario } = useUsuario();
-
-  const [formulario, setFormulario] = useState({
-    email: "",
-    password: ""
-  });
-
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormulario((prev) => ({ ...prev, [name]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setError("");
-
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formulario)
+        body: JSON.stringify(data),
       });
 
       const json = await res.json();
@@ -46,7 +49,10 @@ const Login = () => {
       setToken(token);
       console.log("🧠 Usuario recibido en login:", user);
       setUsuario({ ...user, registrado: true });
-      navigate("/home");
+      reset();
+      setTimeout(() => {
+        navigate("/home");
+      }, 800);      
     } catch (err) {
       setError(err.message);
     }
@@ -59,7 +65,7 @@ const Login = () => {
       </h1>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-3xl bg-white border-[6px] border-black rounded-xl shadow-2xl p-12 space-y-10 text-center transition-all duration-300"
       >
         <h2 className="text-4xl font-[Impact] text-brown drop-shadow-sm tracking-tight">
@@ -72,39 +78,45 @@ const Login = () => {
           </p>
         )}
 
+        {/* Email */}
         <div className="space-y-4">
           <label className="block text-left text-[22px] font-[Impact] text-gray-800">
             Email
             <input
               type="email"
-              name="email"
               placeholder="ADMIN: ulibucchino@gmail.com - USUARIO COMÚN: dbucchino@gmail.com"
-              value={formulario.email}
-              onChange={handleChange}
+              {...register("email")}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"
             />
+            {errors.email && (
+              <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+            )}
           </label>
         </div>
 
+        {/* Password */}
         <div className="space-y-4">
           <label className="block text-left text-[22px] font-[Impact] text-gray-800">
             Contraseña
             <input
               type="password"
-              name="password"
               placeholder="ADMIN: admin123 - USUARIO COMÚN: 6568DaLi"
-              value={formulario.password}
-              onChange={handleChange}
+              {...register("password")}
               className="w-full mt-2 border-[3px] border-black border-l-[10px] border-gray-400 rounded-md px-6 py-3 text-[20px] font-mono shadow-sm"
             />
+            {errors.password && (
+              <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>
+            )}
           </label>
         </div>
 
-        <input
+        <button
           type="submit"
-          value="INGRESAR"
-          className="w-full text-[22px] font-[Impact] bg-brown text-white border-[4px] border-black rounded-md px-6 py-4 cursor-pointer hover:bg-black transition duration-300 shadow-md"
-        />
+          disabled={isSubmitting}
+          className="w-full text-[22px] font-[Impact] bg-brown text-white border-[4px] border-black rounded-md px-6 py-4 cursor-pointer hover:bg-black transition duration-300 shadow-md disabled:opacity-60"
+        >
+          {isSubmitting ? "INGRESANDO..." : "INGRESAR"}
+        </button>
       </form>
     </section>
   );
