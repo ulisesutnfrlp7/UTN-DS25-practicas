@@ -6,13 +6,13 @@ console.log("🌐 BASE_URL:", BASE_URL);
 
 // Autores
 export async function getAuthors() {
-  const res = await fetch(`${BASE_URL}/authors`);
+  const res = await fetch(`${BASE_URL}/api/authors`);
   if (!res.ok) throw new Error('Error obteniendo autores');
   return res.json();
 }
 
 export async function createAuthor(name, token) {
-  const res = await fetch(`${BASE_URL}/authors`, {
+  const res = await fetch(`${BASE_URL}/api/authors`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -26,19 +26,19 @@ export async function createAuthor(name, token) {
 
 // Libros
 export async function getBooks() {
-  const res = await fetch(`${BASE_URL}/books`);
+  const res = await fetch(`${BASE_URL}/api/books`);
   if (!res.ok) throw new Error('Error al obtener libros');
   return res.json();
 }
 
 export async function getBooksByCategory(categoria) {
-  const res = await fetch(`${BASE_URL}/books/by-category?categoria=${categoria}`);
+  const res = await fetch(`${BASE_URL}/api/books/by-category?categoria=${categoria}`);
   if (!res.ok) throw new Error('Error al obtener libros por categoría');
   return res.json();
 }
 
 export async function createBook(bookData, token) {
-  const res = await fetch(`${BASE_URL}/books`, {
+  const res = await fetch(`${BASE_URL}/api/books`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export async function createBook(bookData, token) {
 }
 
 export async function deleteBook(id, token) {
-  const res = await fetch(`${BASE_URL}/books/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/books/${id}`, {
     method: 'DELETE',
     headers: { 
       'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export async function deleteBook(id, token) {
 }
 
 export async function updateBook(bookData, token) {
-  const res = await fetch(`${BASE_URL}/books/${bookData.id}`, {
+  const res = await fetch(`${BASE_URL}/api/books/${bookData.id}`, {
     method: 'PUT',
     headers: { 
       'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export async function updateBook(bookData, token) {
 
 // Usuarios
 export async function createUser(userData, token) {
-  const res = await fetch(`${BASE_URL}/users`, {
+  const res = await fetch(`${BASE_URL}/api/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export async function createUser(userData, token) {
 
 // Contacto
 export async function sendMessage(messageData) {
-  const res = await fetch(`${BASE_URL}/contact`, {
+  const res = await fetch(`${BASE_URL}/api/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(messageData)
