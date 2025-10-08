@@ -1,13 +1,14 @@
 // src/components/Header.jsx
 
 import logoYenny from '../assets/images/yenny-el-ateneo.jpg';
+import fondoLibreria from '../assets/images/R.jpg'
 
 const Header = () => {
   return (
     <header className="relative flex items-center justify-center flex-wrap text-white p-5 overflow-hidden">
 
       <img
-        src="/src/assets/images/R.jpg"
+        src={fondoLibreria}
         alt="Fondo librería"
         className="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0"
       />

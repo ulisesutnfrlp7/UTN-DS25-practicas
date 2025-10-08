@@ -7,13 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Category {
-  Novela
-  Terror
-  CienciaFiccion
-  Policial
-}
-
 model Author {
   id    Int    @id @default(autoincrement())
   name  String
@@ -21,14 +14,14 @@ model Author {
 }
 
 model Book {
-  id             Int      @id @default(autoincrement())
-  title          String
-  description    String
-  image          String
-  categoria      Category
-  authorId       Int
-  author         Author @relation(fields: [authorId], references: [id])
-  createdAt      DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  description String
+  image       String
+  categoria   Category
+  createdAt   DateTime @default(now())
+  authorId    Int
+  title       String
+  author      Author   @relation(fields: [authorId], references: [id])
 }
 
 model ContactMessage {
@@ -37,22 +30,29 @@ model ContactMessage {
   apellido  String
   email     String
   mensaje   String
-  userId    Int
-  user         User @relation(fields: [userId], references: [id])
   enviadoEn DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
+  id           Int              @id @default(autoincrement())
   nombre       String
   apellido     String
-  email        String   @unique
-  password     String
-  role         Role    @default(USER)
   sexo         String
   temaFavorito String
+  createdAt    DateTime         @default(now())
+  email        String           @unique
+  password     String
+  role         Role             @default(USER)
   messages     ContactMessage[]
-  createdAt    DateTime @default(now())
+}
+
+enum Category {
+  Novela
+  Terror
+  CienciaFiccion
+  Policial
 }
 
 enum Role {
