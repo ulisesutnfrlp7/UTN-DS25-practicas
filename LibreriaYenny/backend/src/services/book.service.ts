@@ -25,10 +25,18 @@ export async function getBooksByCategory(categoria: Category) {
 
 // Obtener un libro por ID
 export async function getBookById(id: number) {
-  return await prisma.book.findUnique({ 
+  const book = await prisma.book.findUnique({ 
     where: { id }, 
     include: { author: true }
-  });
+  })
+
+  if (!book) {
+    const error = new Error('Libro no encontrado') as any
+    error.statusCode = 404
+    throw error
+  }
+
+  return book
 }
 
 // Crear un nuevo libro
